@@ -1,0 +1,825 @@
+/* ============================================
+   CINEMATIC INTRO - STYLE SYSTEM
+   Multi-layered motion design with velocity easing,
+   impact rebounds, mask reveals, and synchronized timing
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', 'Trebuchet MS', sans-serif;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background: #0a0a0a;
+    color: #fff;
+    font-size: 16px;
+}
+
+#mainDiv {
+    width: 100%;
+    height: 100%;
+}
+
+/* ===== ENTER SCREEN ===== */
+.enter_screen {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #130233, #011233);
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Camera container - receives shake/pan transforms */
+.camera-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center center;
+    will-change: transform;
+}
+
+/* Scanline sweep - thin bright line sweeps top→bottom at start */
+.camera-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255,255,255,0.5) 35%, 
+        rgba(255,255,255,0.9) 50%, 
+        rgba(255,255,255,0.5) 65%, 
+        transparent 100%);
+    z-index: 50;
+    opacity: 0;
+    animation: scanlineSweep 0.3s linear 0.08s forwards;
+    pointer-events: none;
+}
+
+@keyframes scanlineSweep {
+    0% { top: 0%; opacity: 0.6; }
+    100% { top: 100%; opacity: 0; }
+}
+
+/* Light streak - diagonal bright line flashes across screen */
+.camera-container::after {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: -20%;
+    width: 140%;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255,255,255,0.6) 42%, 
+        #fff 50%, 
+        rgba(255,255,255,0.6) 58%, 
+        transparent 100%);
+    transform: rotate(-25deg);
+    z-index: 50;
+    opacity: 0;
+    animation: lightStreak 0.22s linear 0.12s forwards;
+    pointer-events: none;
+}
+
+@keyframes lightStreak {
+    0% { transform: rotate(-25deg) translateY(-50vh); opacity: 0; }
+    12% { opacity: 0.7; }
+    80% { opacity: 0.2; }
+    100% { transform: rotate(-25deg) translateY(50vh); opacity: 0; }
+}
+
+/* ===== BACKGROUND PARALLAX LAYERS ===== */
+.bg-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    will-change: transform;
+}
+
+.bg-layer-1 {
+    z-index: 1;
+    background: radial-gradient(ellipse 600px 300px at 50% 50%, 
+        rgba(25, 25, 45, 0.7) 0%, transparent 70%);
+    opacity: 0;
+    animation: bgFadeIn 1.2s ease-out 0.3s forwards;
+}
+
+.bg-layer-2 {
+    z-index: 2;
+    background: 
+        radial-gradient(circle 250px at 25% 35%, rgba(40, 40, 70, 0.25) 0%, transparent 70%),
+        radial-gradient(circle 250px at 75% 65%, rgba(35, 35, 60, 0.25) 0%, transparent 70%);
+    opacity: 0;
+    animation: bgFadeIn 1.2s ease-out 0.4s forwards;
+}
+
+@keyframes bgFadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* ===== FLASH OVERLAY ===== */
+.flash-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 100;
+    will-change: opacity;
+}
+
+.flash-overlay.pulse {
+    animation: flashPulse 0.18s ease-out forwards;
+}
+
+.flash-overlay.big-flash {
+    animation: flashBig 0.35s ease-out forwards;
+}
+
+@keyframes flashPulse {
+    0% { opacity: 0; }
+    25% { opacity: 0.5; }
+    100% { opacity: 0; }
+}
+
+@keyframes flashBig {
+    0% { opacity: 0; }
+    12% { opacity: 0.9; }
+    35% { opacity: 0.4; }
+    100% { opacity: 0; }
+}
+
+/* ===== VIGNETTE OVERLAY ===== */
+.vignette-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.75) 100%);
+    pointer-events: none;
+    z-index: 95;
+    opacity: 0;
+    animation: vignetteIn 1.5s ease-out 0.6s forwards;
+}
+
+@keyframes vignetteIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* ===== CENTER STAGE ===== */
+.center_stage {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    will-change: transform;
+}
+
+/* ===== LINE SYSTEM ===== */
+.stage_line_container {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    z-index: 8;
+    height: 4px;
+    pointer-events: none;
+}
+
+/* Main horizontal line - sweeps in from left with expanding scaleX */
+.stage_line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(120,120,120,0.4) 5%,
+        rgba(180,180,180,0.7) 15%,
+        rgba(255,255,255,0.95) 50%,
+        rgba(180,180,180,0.7) 85%,
+        rgba(120,120,120,0.4) 95%,
+        transparent 100%);
+    box-shadow: 
+        0 0 8px rgba(255,255,255,0.5),
+        0 0 20px rgba(255,255,255,0.25),
+        0 0 40px rgba(180,180,255,0.12);
+    transform: scaleX(0);
+    transform-origin: left center;
+    opacity: 0;
+    animation: lineSweepIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+}
+
+/* Bright traveling edge that sweeps across with the line expansion */
+.line-sweep-edge {
+    position: absolute;
+    top: -25px;
+    left: 0%;
+    width: 3px;
+    height: 50px;
+    background: linear-gradient(180deg, 
+        transparent 0%, 
+        rgba(255,255,255,0.8) 20%, 
+        #fff 50%, 
+        rgba(255,255,255,0.8) 80%, 
+        transparent 100%);
+    box-shadow: 
+        0 0 12px #fff,
+        0 0 25px rgba(255,255,255,0.7),
+        0 0 45px rgba(180,180,255,0.4),
+        0 0 70px rgba(120,120,255,0.2);
+    opacity: 0;
+    z-index: 9;
+    animation: lineEdgeTravel 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+}
+
+@keyframes lineSweepIn {
+    0% { transform: scaleX(0); opacity: 0; }
+    8% { opacity: 1; }
+    100% { transform: scaleX(1); opacity: 1; }
+}
+
+@keyframes lineEdgeTravel {
+    0% { left: 0%; opacity: 0; }
+    8% { opacity: 1; }
+    85% { opacity: 0.6; }
+    100% { left: 100%; opacity: 0; }
+}
+
+/* Line glow pulse after settled - subtle breathing effect */
+.stage_line.settled {
+    animation: lineGlowPulse 3s ease-in-out infinite !important;
+    transform: scaleX(1) !important;
+    opacity: 1 !important;
+}
+
+@keyframes lineGlowPulse {
+    0%, 100% { 
+        box-shadow: 
+            0 0 8px rgba(255,255,255,0.5),
+            0 0 20px rgba(255,255,255,0.25),
+            0 0 40px rgba(180,180,255,0.12);
+    }
+    50% { 
+        box-shadow: 
+            0 0 12px rgba(255,255,255,0.7),
+            0 0 30px rgba(255,255,255,0.4),
+            0 0 55px rgba(180,180,255,0.2);
+    }
+}
+
+/* ===== CHARACTER IMAGES CONTAINER ===== */
+.enter_screen_imgs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 7; /* Behind line initially - masked by line */
+    min-height: 200px;
+    pointer-events: none;
+}
+
+/* After characters emerge from behind line, bring container in front */
+.enter_screen_imgs.revealed {
+    z-index: 12;
+}
+
+/* Character container wrappers */
+.char-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    will-change: transform, filter, clip-path;
+}
+
+/* ===== LEFT SWORD ===== */
+.char-left {
+    animation: swordLeftIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+}
+
+.sword-left {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+}
+
+/* ===== CENTER CHARACTER ===== */
+.char-center {
+    animation: characterCenterIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
+}
+
+.character-center {
+    width: 65% !important;
+    height: 65% !important;
+    border-radius: 30%;
+    
+}
+
+/* ===== RIGHT SWORD ===== */
+.char-right {
+    animation: swordRightIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
+}
+
+
+.sword-right {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+.enter-screen-title {
+    position: fixed !important;
+    top: 20px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 2147483647 !important; /* Maximum practical z-index */
+}
+.enter-screen-title_1 {
+    position: fixed !important;
+    top: 60px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 2147483647 !important; /* Maximum practical z-index */
+}
+
+/* ===== ENTRANCE KEYFRAMES =====
+   Each entrance uses:
+   - Fast directional slide with velocity easing (expo ease-out)
+   - Motion blur (filter: blur) during fast movement
+   - Brightness flash on appearance
+   - Clip-path mask reveal from line center
+   - Impact overshoot past target position
+   - Multi-step rebound settle (spring-like)
+   - Rotation during movement that settles to final angle
+*/
+
+@keyframes swordLeftIn {
+    0% {
+        transform: translateX(-350px) rotate(-40deg) scale(0.6);
+        clip-path: inset(48% 0 48% 0); /* Thin strip at center = behind line */
+        filter: blur(0px) brightness(0.3);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+        filter: blur(8px) brightness(2); /* Motion blur + brightness flash */
+    }
+    35% {
+        clip-path: inset(15% 0 15% 0); /* Expanding reveal from line */
+        transform: translateX(-80px) rotate(-15deg) scale(0.9);
+        filter: blur(4px) brightness(1.5);
+    }
+    55% {
+        clip-path: inset(0 0 0 0); /* Fully revealed */
+        transform: translateX(20px) rotate(10deg) scale(1.06); /* Impact overshoot */
+        filter: blur(1.5px) brightness(1.2);
+    }
+    72% {
+        transform: translateX(-8px) rotate(-4deg) scale(0.97); /* First rebound */
+        filter: blur(0px) brightness(1.05);
+    }
+    85% {
+        transform: translateX(3px) rotate(1deg) scale(1.01); /* Second rebound */
+        filter: blur(0px) brightness(1);
+    }
+    100% {
+        transform: translateX(0) rotate(-5deg) scale(1); /* Settled with slight angle */
+        clip-path: inset(0 0 0 0);
+        filter: blur(0px) brightness(1);
+        opacity: 1;
+    }
+}
+
+@keyframes characterCenterIn {
+    0% {
+        transform: translateY(100px) rotate(0deg) scale(0.7);
+        clip-path: inset(49% 0 49% 0); /* Nearly invisible strip = behind line */
+        filter: blur(0px) brightness(0.2);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+        filter: blur(6px) brightness(2.5); /* Strong motion blur + flash */
+    }
+    30% {
+        clip-path: inset(25% 0 25% 0); /* Expanding from line center */
+        transform: translateY(30px) rotate(-2deg) scale(0.9);
+        filter: blur(3px) brightness(1.5);
+    }
+    50% {
+        clip-path: inset(5% 0 5% 0); /* Nearly full reveal */
+        transform: translateY(-18px) rotate(-4deg) scale(1.07); /* Impact overshoot up */
+        filter: blur(1px) brightness(1.15);
+    }
+    65% {
+        clip-path: inset(0 0 0 0); /* Fully revealed */
+        transform: translateY(10px) rotate(2deg) scale(0.97); /* Rebound down */
+        filter: blur(0px) brightness(1.02);
+    }
+    80% {
+        transform: translateY(-4px) rotate(-1deg) scale(1.01); /* Second rebound */
+    }
+    100% {
+        transform: translateY(0) rotate(0deg) scale(1); /* Settled */
+        clip-path: inset(0 0 0 0);
+        filter: blur(0px) brightness(1);
+        opacity: 1;
+    }
+}
+
+@keyframes swordRightIn {
+    0% {
+        transform: translateX(350px) rotate(40deg) scale(0.6);
+        clip-path: inset(48% 0 48% 0); /* Thin strip at center = behind line */
+        filter: blur(0px) brightness(0.3);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+        filter: blur(8px) brightness(2); /* Motion blur + brightness flash */
+    }
+    35% {
+        clip-path: inset(15% 0 15% 0); /* Expanding reveal from line */
+        transform: translateX(80px) rotate(15deg) scale(0.9);
+        filter: blur(4px) brightness(1.5);
+    }
+    55% {
+        clip-path: inset(0 0 0 0); /* Fully revealed */
+        transform: translateX(-20px) rotate(-10deg) scale(1.06); /* Impact overshoot */
+        filter: blur(1.5px) brightness(1.2);
+    }
+    72% {
+        transform: translateX(8px) rotate(4deg) scale(0.97); /* First rebound */
+        filter: blur(0px) brightness(1.05);
+    }
+    85% {
+        transform: translateX(-3px) rotate(-1deg) scale(1.01); /* Second rebound */
+        filter: blur(0px) brightness(1);
+    }
+    100% {
+        transform: translateX(0) rotate(5deg) scale(1); /* Settled with slight angle */
+        clip-path: inset(0 0 0 0);
+        filter: blur(0px) brightness(1);
+        opacity: 1;
+    }
+}
+
+/* ===== TEXT ANIMATION =====
+   Letter-by-letter reveal with tracking (letter-spacing) expansion
+   Each letter: slide up + blur → overshoot → rebound → settle
+   Container: tight tracking → expand → settle
+*/
+
+.enter-text-container {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: -4px; /* Start tight */
+    animation: trackingExpand 0.6s cubic-bezier(0.16, 1, 0.3, 1) 1.3s forwards;
+    pointer-events: none;
+}
+
+.enter-letter {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(25px) scale(0.5);
+    filter: blur(5px);
+    animation: letterIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    will-change: transform, filter, opacity;
+    font-family: sans-serif
+}
+
+.enter-letter-space {
+    width: 8px;
+    display: inline-block;
+}
+
+/* Staggered letter timing - each letter appears 30ms after the previous */
+.enter-letter[data-i="0"]  { animation-delay: 1.15s; }
+.enter-letter[data-i="1"]  { animation-delay: 1.18s; }
+.enter-letter[data-i="2"]  { animation-delay: 1.21s; }
+.enter-letter[data-i="3"]  { animation-delay: 1.24s; }
+.enter-letter[data-i="4"]  { animation-delay: 1.27s; }
+.enter-letter[data-i="6"]  { animation-delay: 1.33s; }
+.enter-letter[data-i="7"]  { animation-delay: 1.36s; }
+.enter-letter[data-i="9"]  { animation-delay: 1.42s; }
+.enter-letter[data-i="10"] { animation-delay: 1.45s; }
+.enter-letter[data-i="11"] { animation-delay: 1.48s; }
+.enter-letter[data-i="12"] { animation-delay: 1.51s; }
+.enter-letter[data-i="13"] { animation-delay: 1.54s; }
+
+@keyframes letterIn {
+    0% {
+        opacity: 0;
+        transform: translateY(25px) scale(0.5) rotate(0deg);
+        filter: blur(5px);
+    }
+    35% {
+        opacity: 1;
+        transform: translateY(-5px) scale(1.12) rotate(-3deg); /* Overshoot up */
+        filter: blur(0px);
+    }
+    55% {
+        transform: translateY(3px) scale(0.96) rotate(1deg); /* Rebound */
+    }
+    75% {
+        transform: translateY(-1px) scale(1.02) rotate(0deg); /* Second rebound */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotate(0deg); /* Settled */
+        filter: blur(0px);
+    }
+}
+
+/* Tracking expansion: tight → wide → settle */
+@keyframes trackingExpand {
+    0% { letter-spacing: -4px; }
+    50% { letter-spacing: 12px; } /* Overshoot wide */
+    75% { letter-spacing: 7px; } /* Rebound tighter */
+    100% { letter-spacing: 8px; } /* Settled */
+}
+
+/* Text breathing pulse after settled - indicates clickability */
+.enter-text-container.breathing .enter-letter {
+    animation: textBreathing 1.5s ease-in-out infinite !important;
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) rotate(0deg) !important;
+    filter: blur(0px) !important;
+}
+
+@keyframes textBreathing {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Hover glow effect on text */
+.enter_screen:hover .enter-letter {
+    transition: color 0.15s, text-shadow 0.15s;
+    color: #e8e8e8;
+    text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.25);
+}
+
+/* ===== CAMERA SHAKE =====
+   Brief shake on line impact, heavy shake on exit click
+*/
+
+.camera-container.shake {
+    animation: cameraShake 0.25s ease-out;
+}
+
+@keyframes cameraShake {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    15% { transform: translate(-5px, 3px) rotate(-0.4deg); }
+    30% { transform: translate(4px, -2px) rotate(0.3deg); }
+    50% { transform: translate(-3px, 1px) rotate(-0.2deg); }
+    70% { transform: translate(2px, -1px) rotate(0.1deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.camera-container.shake-heavy {
+    animation: cameraShakeHeavy 0.4s ease-out;
+}
+
+@keyframes cameraShakeHeavy {
+    0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    10% { transform: translate(-8px, 5px) rotate(-0.8deg) scale(1.02); }
+    20% { transform: translate(7px, -4px) rotate(0.6deg) scale(0.98); }
+    30% { transform: translate(-5px, 3px) rotate(-0.5deg) scale(1.01); }
+    40% { transform: translate(4px, -2px) rotate(0.3deg); }
+    50% { transform: translate(-3px, 2px) rotate(-0.2deg); }
+    65% { transform: translate(2px, -1px) rotate(0.1deg); }
+    80% { transform: translate(-1px, 1px); }
+    100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+}
+
+/* ===== EXIT ANIMATIONS =====
+   Fast, energetic exits with motion blur, rotation,
+   clip-path contraction (reverse of entrance reveal),
+   and synchronized timing
+*/
+
+.enter_screen.exit-active {
+    animation: screenExit 0.8s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+}
+
+@keyframes screenExit {
+    0% { opacity: 1; filter: blur(0) brightness(1); transform: scale(1); }
+    30% { filter: brightness(1.8); transform: scale(1.03); }
+    100% { opacity: 0; filter: brightness(3) blur(15px); transform: scale(1.08); }
+}
+
+.char-left.exit {
+    animation: swordLeftOut 0.45s cubic-bezier(0.55, 0, 1, 0.45) forwards !important;
+}
+
+@keyframes swordLeftOut {
+    0% { 
+        transform: translateX(0) rotate(-5deg) scale(1); 
+        clip-path: inset(0 0 0 0); 
+        filter: blur(0); 
+        opacity: 1; 
+    }
+    15% { 
+        filter: blur(5px) brightness(1.5); /* Motion blur on exit */
+    }
+    100% { 
+        transform: translateX(-450px) rotate(-70deg) scale(0.3); 
+        clip-path: inset(50% 0 50% 0); /* Contract back to line strip */
+        filter: blur(10px); 
+        opacity: 0; 
+    }
+}
+
+.char-center.exit {
+    animation: characterCenterOut 0.45s cubic-bezier(0.55, 0, 1, 0.45) forwards !important;
+}
+
+@keyframes characterCenterOut {
+    0% { 
+        transform: translateY(0) scale(1); 
+        clip-path: inset(0 0 0 0); 
+        filter: blur(0); 
+        opacity: 1; 
+    }
+    15% { 
+        filter: blur(5px) brightness(1.5); 
+    }
+    100% { 
+        transform: translateY(250px) scale(0.3) rotate(12deg); 
+        clip-path: inset(50% 0 50% 0); /* Contract back to line strip */
+        filter: blur(10px); 
+        opacity: 0; 
+    }
+}
+
+.char-right.exit {
+    animation: swordRightOut 0.45s cubic-bezier(0.55, 0, 1, 0.45) forwards !important;
+}
+
+@keyframes swordRightOut {
+    0% { 
+        transform: translateX(0) rotate(5deg) scale(1); 
+        clip-path: inset(0 0 0 0); 
+        filter: blur(0); 
+        opacity: 1; 
+    }
+    15% { 
+        filter: blur(5px) brightness(1.5); 
+    }
+    100% { 
+        transform: translateX(450px) rotate(70deg) scale(0.3); 
+        clip-path: inset(50% 0 50% 0); /* Contract back to line strip */
+        filter: blur(10px); 
+        opacity: 0; 
+    }
+}
+
+.stage_line.exit {
+    animation: lineSweepOut 0.35s cubic-bezier(0.55, 0, 1, 0.45) forwards !important;
+    transform-origin: center !important; /* Contract from both sides to center */
+}
+
+@keyframes lineSweepOut {
+    0% { transform: scaleX(1); opacity: 1; }
+    100% { transform: scaleX(0); opacity: 0; }
+}
+
+.line-sweep-edge.exit {
+    animation: lineEdgeExit 0.3s ease-out forwards !important;
+}
+
+@keyframes lineEdgeExit {
+    0% { opacity: 0; left: 50%; }
+    40% { opacity: 1; }
+    100% { left: 0%; opacity: 0; }
+}
+
+.enter-letter.exit {
+    animation: letterOut 0.3s cubic-bezier(0.55, 0, 1, 0.45) forwards !important;
+}
+
+@keyframes letterOut {
+    0% { 
+        transform: translateY(0) scale(1); 
+        opacity: 1; 
+        filter: blur(0); 
+    }
+    100% { 
+        transform: translateY(-70px) scale(0.2); 
+        opacity: 0; 
+        filter: blur(6px); 
+    }
+}
+
+.enter-text-container.exit {
+    animation: trackingContract 0.25s ease-in forwards !important;
+}
+
+@keyframes trackingContract {
+    0% { letter-spacing: 8px; opacity: 1; }
+    100% { letter-spacing: 25px; opacity: 0; }
+}
+
+/* ===== HERO AREA ===== */
+.heroArea {
+    width: 100%;
+    height: 100%;
+    display: none;
+    background-color: #0a0a0a;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.heroArea.show {
+    display: flex;
+    animation: heroIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes heroIn {
+    0% { opacity: 0; filter: blur(8px); }
+    100% { opacity: 1; filter: blur(0); }
+}
+
+.heroArea_text {
+    max-width: 800px;
+    text-align: center;
+}
+
+.heroArea_text h1 {
+    font-size: 48px;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.heroArea_text p {
+    font-size: 18px;
+    color: #888;
+    line-height: 1.6;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .enter_screen_imgs { gap: 30px; }
+    .sword-left, .sword-right { width: 65px; height: 65px; }
+    .character-center { width: 120px; height: 120px; }
+    .enter-letter { font-size: 14px; }
+    .enter-letter-space { width: 6px; }
+    .heroArea_text h1 { font-size: 40px; }
+    .heroArea_text p { font-size: 16px; }
+}
+
+@media (max-width: 480px) {
+    .enter_screen_imgs { gap: 20px; }
+    .sword-left, .sword-right { width: 50px; height: 50px; }
+    .character-center { width: 90px; height: 90px; }
+    .enter-letter { font-size: 12px; }
+    .enter-letter-space { width: 4px; }
+    .heroArea_text h1 { font-size: 32px; }
+    .heroArea_text p { font-size: 14px; }
+}
