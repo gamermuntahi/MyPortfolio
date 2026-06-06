@@ -252,28 +252,6 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
     });
 
-    // ===== RESPONSIVE IMAGE SIZING =====
-    function handleResize() {
-        const width = window.innerWidth;
-        const swordLeft = document.querySelector('.sword-left');
-        const swordRight = document.querySelector('.sword-right');
-        const characterCenter = document.querySelector('.character-center');
-
-        if (width <= 480) {
-            if (swordLeft) { swordLeft.style.width = '50px'; swordLeft.style.height = '50px'; }
-            if (swordRight) { swordRight.style.width = '50px'; swordRight.style.height = '50px'; }
-            if (characterCenter) { characterCenter.style.width = '90px'; characterCenter.style.height = '90px'; }
-        } else if (width <= 768) {
-            if (swordLeft) { swordLeft.style.width = '65px'; swordLeft.style.height = '65px'; }
-            if (swordRight) { swordRight.style.width = '65px'; swordRight.style.height = '65px'; }
-            if (characterCenter) { characterCenter.style.width = '120px'; characterCenter.style.height = '120px'; }
-        } else {
-            if (swordLeft) { swordLeft.style.width = '90px'; swordLeft.style.height = '90px'; }
-            if (swordRight) { swordRight.style.width = '90px'; swordRight.style.height = '90px'; }
-            if (characterCenter) { characterCenter.style.width = '160px'; characterCenter.style.height = '160px'; }
-        }
-    }
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
+    // Responsive sizing is handled entirely by CSS @media queries
+    // No JS resize handler needed - CSS handles all breakpoints
 });

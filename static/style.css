@@ -11,7 +11,8 @@
     font-family: 'Segoe UI', 'Trebuchet MS', sans-serif;
 }
 
-html, body {
+html,
+body {
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -26,6 +27,13 @@ body {
 #mainDiv {
     width: 100%;
     height: 100%;
+}
+
+.heroArea {
+    width: 60%;
+    height: auto;
+    border-radius: 20px;
+    background-color: red;
 }
 
 /* ===== ENTER SCREEN ===== */
@@ -59,12 +67,12 @@ body {
     left: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(255,255,255,0.5) 35%, 
-        rgba(255,255,255,0.9) 50%, 
-        rgba(255,255,255,0.5) 65%, 
-        transparent 100%);
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.5) 35%,
+            rgba(255, 255, 255, 0.9) 50%,
+            rgba(255, 255, 255, 0.5) 65%,
+            transparent 100%);
     z-index: 50;
     opacity: 0;
     animation: scanlineSweep 0.3s linear 0.08s forwards;
@@ -72,8 +80,15 @@ body {
 }
 
 @keyframes scanlineSweep {
-    0% { top: 0%; opacity: 0.6; }
-    100% { top: 100%; opacity: 0; }
+    0% {
+        top: 0%;
+        opacity: 0.6;
+    }
+
+    100% {
+        top: 100%;
+        opacity: 0;
+    }
 }
 
 /* Light streak - diagonal bright line flashes across screen */
@@ -84,12 +99,12 @@ body {
     left: -20%;
     width: 140%;
     height: 1px;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(255,255,255,0.6) 42%, 
-        #fff 50%, 
-        rgba(255,255,255,0.6) 58%, 
-        transparent 100%);
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.6) 42%,
+            #fff 50%,
+            rgba(255, 255, 255, 0.6) 58%,
+            transparent 100%);
     transform: rotate(-25deg);
     z-index: 50;
     opacity: 0;
@@ -98,10 +113,23 @@ body {
 }
 
 @keyframes lightStreak {
-    0% { transform: rotate(-25deg) translateY(-50vh); opacity: 0; }
-    12% { opacity: 0.7; }
-    80% { opacity: 0.2; }
-    100% { transform: rotate(-25deg) translateY(50vh); opacity: 0; }
+    0% {
+        transform: rotate(-25deg) translateY(-50vh);
+        opacity: 0;
+    }
+
+    12% {
+        opacity: 0.7;
+    }
+
+    80% {
+        opacity: 0.2;
+    }
+
+    100% {
+        transform: rotate(-25deg) translateY(50vh);
+        opacity: 0;
+    }
 }
 
 /* ===== BACKGROUND PARALLAX LAYERS ===== */
@@ -117,15 +145,15 @@ body {
 
 .bg-layer-1 {
     z-index: 1;
-    background: radial-gradient(ellipse 600px 300px at 50% 50%, 
-        rgba(25, 25, 45, 0.7) 0%, transparent 70%);
+    background: radial-gradient(ellipse 600px 300px at 50% 50%,
+            rgba(25, 25, 45, 0.7) 0%, transparent 70%);
     opacity: 0;
     animation: bgFadeIn 1.2s ease-out 0.3s forwards;
 }
 
 .bg-layer-2 {
     z-index: 2;
-    background: 
+    background:
         radial-gradient(circle 250px at 25% 35%, rgba(40, 40, 70, 0.25) 0%, transparent 70%),
         radial-gradient(circle 250px at 75% 65%, rgba(35, 35, 60, 0.25) 0%, transparent 70%);
     opacity: 0;
@@ -133,8 +161,13 @@ body {
 }
 
 @keyframes bgFadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 /* ===== FLASH OVERLAY ===== */
@@ -160,16 +193,35 @@ body {
 }
 
 @keyframes flashPulse {
-    0% { opacity: 0; }
-    25% { opacity: 0.5; }
-    100% { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 @keyframes flashBig {
-    0% { opacity: 0; }
-    12% { opacity: 0.9; }
-    35% { opacity: 0.4; }
-    100% { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
+
+    12% {
+        opacity: 0.9;
+    }
+
+    35% {
+        opacity: 0.4;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 /* ===== VIGNETTE OVERLAY ===== */
@@ -179,7 +231,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.75) 100%);
+    background: radial-gradient(ellipse at center, transparent 35%, rgba(0, 0, 0, 0.75) 100%);
     pointer-events: none;
     z-index: 95;
     opacity: 0;
@@ -187,8 +239,13 @@ body {
 }
 
 @keyframes vignetteIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 /* ===== CENTER STAGE ===== */
@@ -223,18 +280,18 @@ body {
     left: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(120,120,120,0.4) 5%,
-        rgba(180,180,180,0.7) 15%,
-        rgba(255,255,255,0.95) 50%,
-        rgba(180,180,180,0.7) 85%,
-        rgba(120,120,120,0.4) 95%,
-        transparent 100%);
-    box-shadow: 
-        0 0 8px rgba(255,255,255,0.5),
-        0 0 20px rgba(255,255,255,0.25),
-        0 0 40px rgba(180,180,255,0.12);
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(120, 120, 120, 0.4) 5%,
+            rgba(180, 180, 180, 0.7) 15%,
+            rgba(255, 255, 255, 0.95) 50%,
+            rgba(180, 180, 180, 0.7) 85%,
+            rgba(120, 120, 120, 0.4) 95%,
+            transparent 100%);
+    box-shadow:
+        0 0 8px rgba(255, 255, 255, 0.5),
+        0 0 20px rgba(255, 255, 255, 0.25),
+        0 0 40px rgba(180, 180, 255, 0.12);
     transform: scaleX(0);
     transform-origin: left center;
     opacity: 0;
@@ -248,33 +305,56 @@ body {
     left: 0%;
     width: 3px;
     height: 50px;
-    background: linear-gradient(180deg, 
-        transparent 0%, 
-        rgba(255,255,255,0.8) 20%, 
-        #fff 50%, 
-        rgba(255,255,255,0.8) 80%, 
-        transparent 100%);
-    box-shadow: 
+    background: linear-gradient(180deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.8) 20%,
+            #fff 50%,
+            rgba(255, 255, 255, 0.8) 80%,
+            transparent 100%);
+    box-shadow:
         0 0 12px #fff,
-        0 0 25px rgba(255,255,255,0.7),
-        0 0 45px rgba(180,180,255,0.4),
-        0 0 70px rgba(120,120,255,0.2);
+        0 0 25px rgba(255, 255, 255, 0.7),
+        0 0 45px rgba(180, 180, 255, 0.4),
+        0 0 70px rgba(120, 120, 255, 0.2);
     opacity: 0;
     z-index: 9;
     animation: lineEdgeTravel 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
 }
 
 @keyframes lineSweepIn {
-    0% { transform: scaleX(0); opacity: 0; }
-    8% { opacity: 1; }
-    100% { transform: scaleX(1); opacity: 1; }
+    0% {
+        transform: scaleX(0);
+        opacity: 0;
+    }
+
+    8% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: scaleX(1);
+        opacity: 1;
+    }
 }
 
 @keyframes lineEdgeTravel {
-    0% { left: 0%; opacity: 0; }
-    8% { opacity: 1; }
-    85% { opacity: 0.6; }
-    100% { left: 100%; opacity: 0; }
+    0% {
+        left: 0%;
+        opacity: 0;
+    }
+
+    8% {
+        opacity: 1;
+    }
+
+    85% {
+        opacity: 0.6;
+    }
+
+    100% {
+        left: 100%;
+        opacity: 0;
+    }
 }
 
 /* Line glow pulse after settled - subtle breathing effect */
@@ -285,17 +365,20 @@ body {
 }
 
 @keyframes lineGlowPulse {
-    0%, 100% { 
-        box-shadow: 
-            0 0 8px rgba(255,255,255,0.5),
-            0 0 20px rgba(255,255,255,0.25),
-            0 0 40px rgba(180,180,255,0.12);
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 8px rgba(255, 255, 255, 0.5),
+            0 0 20px rgba(255, 255, 255, 0.25),
+            0 0 40px rgba(180, 180, 255, 0.12);
     }
-    50% { 
-        box-shadow: 
-            0 0 12px rgba(255,255,255,0.7),
-            0 0 30px rgba(255,255,255,0.4),
-            0 0 55px rgba(180,180,255,0.2);
+
+    50% {
+        box-shadow:
+            0 0 12px rgba(255, 255, 255, 0.7),
+            0 0 30px rgba(255, 255, 255, 0.4),
+            0 0 55px rgba(180, 180, 255, 0.2);
     }
 }
 
@@ -309,7 +392,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 7; /* Behind line initially - masked by line */
+    z-index: 7;
+    /* Behind line initially - masked by line */
     min-height: 200px;
     pointer-events: none;
 }
@@ -334,9 +418,10 @@ body {
 }
 
 .sword-left {
-    width: 90px;
-    height: 90px;
+    width: 100px;
+    height: 100px;
     object-fit: contain;
+    rotate: 90deg;
 }
 
 /* ===== CENTER CHARACTER ===== */
@@ -345,8 +430,9 @@ body {
 }
 
 .character-center {
-    width: 65% !important;
-    height: 65% !important;
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
     border-radius: 30%;
     
 }
@@ -360,21 +446,28 @@ body {
 .sword-right {
     width: 100px;
     height: 100px;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    rotate: -90deg;
     object-fit: contain;
 }
+
 .enter-screen-title {
     position: fixed !important;
     top: 20px !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
-    z-index: 2147483647 !important; /* Maximum practical z-index */
+    z-index: 2147483647 !important;
+    /* Maximum practical z-index */
 }
+
 .enter-screen-title_1 {
     position: fixed !important;
     top: 60px !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
-    z-index: 2147483647 !important; /* Maximum practical z-index */
+    z-index: 2147483647 !important;
+    /* Maximum practical z-index */
 }
 
 /* ===== ENTRANCE KEYFRAMES =====
@@ -391,34 +484,48 @@ body {
 @keyframes swordLeftIn {
     0% {
         transform: translateX(-350px) rotate(-40deg) scale(0.6);
-        clip-path: inset(48% 0 48% 0); /* Thin strip at center = behind line */
+        clip-path: inset(48% 0 48% 0);
+        /* Thin strip at center = behind line */
         filter: blur(0px) brightness(0.3);
         opacity: 0;
     }
+
     10% {
         opacity: 1;
-        filter: blur(8px) brightness(2); /* Motion blur + brightness flash */
+        filter: blur(8px) brightness(2);
+        /* Motion blur + brightness flash */
     }
+
     35% {
-        clip-path: inset(15% 0 15% 0); /* Expanding reveal from line */
+        clip-path: inset(15% 0 15% 0);
+        /* Expanding reveal from line */
         transform: translateX(-80px) rotate(-15deg) scale(0.9);
         filter: blur(4px) brightness(1.5);
     }
+
     55% {
-        clip-path: inset(0 0 0 0); /* Fully revealed */
-        transform: translateX(20px) rotate(10deg) scale(1.06); /* Impact overshoot */
+        clip-path: inset(0 0 0 0);
+        /* Fully revealed */
+        transform: translateX(20px) rotate(10deg) scale(1.06);
+        /* Impact overshoot */
         filter: blur(1.5px) brightness(1.2);
     }
+
     72% {
-        transform: translateX(-8px) rotate(-4deg) scale(0.97); /* First rebound */
+        transform: translateX(-8px) rotate(-4deg) scale(0.97);
+        /* First rebound */
         filter: blur(0px) brightness(1.05);
     }
+
     85% {
-        transform: translateX(3px) rotate(1deg) scale(1.01); /* Second rebound */
+        transform: translateX(3px) rotate(1deg) scale(1.01);
+        /* Second rebound */
         filter: blur(0px) brightness(1);
     }
+
     100% {
-        transform: translateX(0) rotate(-5deg) scale(1); /* Settled with slight angle */
+        transform: translateX(0) rotate(-5deg) scale(1);
+        /* Settled with slight angle */
         clip-path: inset(0 0 0 0);
         filter: blur(0px) brightness(1);
         opacity: 1;
@@ -428,34 +535,49 @@ body {
 @keyframes characterCenterIn {
     0% {
         transform: translateY(100px) rotate(0deg) scale(0.7);
-        clip-path: inset(49% 0 49% 0); /* Nearly invisible strip = behind line */
+        clip-path: inset(49% 0 49% 0);
+        /* Nearly invisible strip = behind line */
         filter: blur(0px) brightness(0.2);
         opacity: 0;
     }
+
     10% {
         opacity: 1;
-        filter: blur(6px) brightness(2.5); /* Strong motion blur + flash */
+        filter: blur(6px) brightness(2.5);
+        /* Strong motion blur + flash */
     }
+
     30% {
-        clip-path: inset(25% 0 25% 0); /* Expanding from line center */
+        clip-path: inset(25% 0 25% 0);
+        /* Expanding from line center */
         transform: translateY(30px) rotate(-2deg) scale(0.9);
         filter: blur(3px) brightness(1.5);
     }
+
     50% {
-        clip-path: inset(5% 0 5% 0); /* Nearly full reveal */
-        transform: translateY(-18px) rotate(-4deg) scale(1.07); /* Impact overshoot up */
+        clip-path: inset(5% 0 5% 0);
+        /* Nearly full reveal */
+        transform: translateY(-18px) rotate(-4deg) scale(1.07);
+        /* Impact overshoot up */
         filter: blur(1px) brightness(1.15);
     }
+
     65% {
-        clip-path: inset(0 0 0 0); /* Fully revealed */
-        transform: translateY(10px) rotate(2deg) scale(0.97); /* Rebound down */
+        clip-path: inset(0 0 0 0);
+        /* Fully revealed */
+        transform: translateY(10px) rotate(2deg) scale(0.97);
+        /* Rebound down */
         filter: blur(0px) brightness(1.02);
     }
+
     80% {
-        transform: translateY(-4px) rotate(-1deg) scale(1.01); /* Second rebound */
+        transform: translateY(-4px) rotate(-1deg) scale(1.01);
+        /* Second rebound */
     }
+
     100% {
-        transform: translateY(0) rotate(0deg) scale(1); /* Settled */
+        transform: translateY(0) rotate(0deg) scale(1);
+        /* Settled */
         clip-path: inset(0 0 0 0);
         filter: blur(0px) brightness(1);
         opacity: 1;
@@ -465,34 +587,48 @@ body {
 @keyframes swordRightIn {
     0% {
         transform: translateX(350px) rotate(40deg) scale(0.6);
-        clip-path: inset(48% 0 48% 0); /* Thin strip at center = behind line */
+        clip-path: inset(48% 0 48% 0);
+        /* Thin strip at center = behind line */
         filter: blur(0px) brightness(0.3);
         opacity: 0;
     }
+
     10% {
         opacity: 1;
-        filter: blur(8px) brightness(2); /* Motion blur + brightness flash */
+        filter: blur(8px) brightness(2);
+        /* Motion blur + brightness flash */
     }
+
     35% {
-        clip-path: inset(15% 0 15% 0); /* Expanding reveal from line */
+        clip-path: inset(15% 0 15% 0);
+        /* Expanding reveal from line */
         transform: translateX(80px) rotate(15deg) scale(0.9);
         filter: blur(4px) brightness(1.5);
     }
+
     55% {
-        clip-path: inset(0 0 0 0); /* Fully revealed */
-        transform: translateX(-20px) rotate(-10deg) scale(1.06); /* Impact overshoot */
+        clip-path: inset(0 0 0 0);
+        /* Fully revealed */
+        transform: translateX(-20px) rotate(-10deg) scale(1.06);
+        /* Impact overshoot */
         filter: blur(1.5px) brightness(1.2);
     }
+
     72% {
-        transform: translateX(8px) rotate(4deg) scale(0.97); /* First rebound */
+        transform: translateX(8px) rotate(4deg) scale(0.97);
+        /* First rebound */
         filter: blur(0px) brightness(1.05);
     }
+
     85% {
-        transform: translateX(-3px) rotate(-1deg) scale(1.01); /* Second rebound */
+        transform: translateX(-3px) rotate(-1deg) scale(1.01);
+        /* Second rebound */
         filter: blur(0px) brightness(1);
     }
+
     100% {
-        transform: translateX(0) rotate(5deg) scale(1); /* Settled with slight angle */
+        transform: translateX(0) rotate(5deg) scale(1);
+        /* Settled with slight angle */
         clip-path: inset(0 0 0 0);
         filter: blur(0px) brightness(1);
         opacity: 1;
@@ -514,7 +650,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    letter-spacing: -4px; /* Start tight */
+    letter-spacing: -4px;
+    /* Start tight */
     animation: trackingExpand 0.6s cubic-bezier(0.16, 1, 0.3, 1) 1.3s forwards;
     pointer-events: none;
 }
@@ -539,18 +676,57 @@ body {
 }
 
 /* Staggered letter timing - each letter appears 30ms after the previous */
-.enter-letter[data-i="0"]  { animation-delay: 1.15s; }
-.enter-letter[data-i="1"]  { animation-delay: 1.18s; }
-.enter-letter[data-i="2"]  { animation-delay: 1.21s; }
-.enter-letter[data-i="3"]  { animation-delay: 1.24s; }
-.enter-letter[data-i="4"]  { animation-delay: 1.27s; }
-.enter-letter[data-i="6"]  { animation-delay: 1.33s; }
-.enter-letter[data-i="7"]  { animation-delay: 1.36s; }
-.enter-letter[data-i="9"]  { animation-delay: 1.42s; }
-.enter-letter[data-i="10"] { animation-delay: 1.45s; }
-.enter-letter[data-i="11"] { animation-delay: 1.48s; }
-.enter-letter[data-i="12"] { animation-delay: 1.51s; }
-.enter-letter[data-i="13"] { animation-delay: 1.54s; }
+.enter-letter[data-i="0"] {
+    animation-delay: 1.15s;
+}
+
+.enter-letter[data-i="1"] {
+    animation-delay: 1.18s;
+}
+
+.enter-letter[data-i="2"] {
+    animation-delay: 1.21s;
+}
+
+.enter-letter[data-i="3"] {
+    animation-delay: 1.24s;
+}
+
+.enter-letter[data-i="4"] {
+    animation-delay: 1.27s;
+}
+
+.enter-letter[data-i="6"] {
+    animation-delay: 1.33s;
+}
+
+.enter-letter[data-i="7"] {
+    animation-delay: 1.36s;
+}
+
+.enter-letter[data-i="9"] {
+    animation-delay: 1.42s;
+}
+
+.enter-letter[data-i="10"] {
+    animation-delay: 1.45s;
+}
+
+.enter-letter[data-i="11"] {
+    animation-delay: 1.48s;
+}
+
+.enter-letter[data-i="12"] {
+    animation-delay: 1.51s;
+}
+
+.enter-letter[data-i="13"] {
+    animation-delay: 1.54s;
+}
+
+.enter-letter[data-i="14"] {
+    animation-delay: 1.57s;
+}
 
 @keyframes letterIn {
     0% {
@@ -558,30 +734,53 @@ body {
         transform: translateY(25px) scale(0.5) rotate(0deg);
         filter: blur(5px);
     }
+
     35% {
         opacity: 1;
-        transform: translateY(-5px) scale(1.12) rotate(-3deg); /* Overshoot up */
+        transform: translateY(-5px) scale(1.12) rotate(-3deg);
+        /* Overshoot up */
         filter: blur(0px);
     }
+
     55% {
-        transform: translateY(3px) scale(0.96) rotate(1deg); /* Rebound */
+        transform: translateY(3px) scale(0.96) rotate(1deg);
+        /* Rebound */
     }
+
     75% {
-        transform: translateY(-1px) scale(1.02) rotate(0deg); /* Second rebound */
+        transform: translateY(-1px) scale(1.02) rotate(0deg);
+        /* Second rebound */
     }
+
     100% {
         opacity: 1;
-        transform: translateY(0) scale(1) rotate(0deg); /* Settled */
+        transform: translateY(0) scale(1) rotate(0deg);
+        /* Settled */
         filter: blur(0px);
     }
 }
 
 /* Tracking expansion: tight → wide → settle */
 @keyframes trackingExpand {
-    0% { letter-spacing: -4px; }
-    50% { letter-spacing: 12px; } /* Overshoot wide */
-    75% { letter-spacing: 7px; } /* Rebound tighter */
-    100% { letter-spacing: 8px; } /* Settled */
+    0% {
+        letter-spacing: -4px;
+    }
+
+    50% {
+        letter-spacing: 12px;
+    }
+
+    /* Overshoot wide */
+    75% {
+        letter-spacing: 7px;
+    }
+
+    /* Rebound tighter */
+    100% {
+        letter-spacing: 8px;
+    }
+
+    /* Settled */
 }
 
 /* Text breathing pulse after settled - indicates clickability */
@@ -593,15 +792,22 @@ body {
 }
 
 @keyframes textBreathing {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
 }
 
 /* Hover glow effect on text */
 .enter_screen:hover .enter-letter {
     transition: color 0.15s, text-shadow 0.15s;
     color: #e8e8e8;
-    text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.25);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.25);
 }
 
 /* ===== CAMERA SHAKE =====
@@ -613,12 +819,29 @@ body {
 }
 
 @keyframes cameraShake {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    15% { transform: translate(-5px, 3px) rotate(-0.4deg); }
-    30% { transform: translate(4px, -2px) rotate(0.3deg); }
-    50% { transform: translate(-3px, 1px) rotate(-0.2deg); }
-    70% { transform: translate(2px, -1px) rotate(0.1deg); }
-    100% { transform: translate(0, 0) rotate(0deg); }
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    15% {
+        transform: translate(-5px, 3px) rotate(-0.4deg);
+    }
+
+    30% {
+        transform: translate(4px, -2px) rotate(0.3deg);
+    }
+
+    50% {
+        transform: translate(-3px, 1px) rotate(-0.2deg);
+    }
+
+    70% {
+        transform: translate(2px, -1px) rotate(0.1deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
 }
 
 .camera-container.shake-heavy {
@@ -626,15 +849,41 @@ body {
 }
 
 @keyframes cameraShakeHeavy {
-    0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-    10% { transform: translate(-8px, 5px) rotate(-0.8deg) scale(1.02); }
-    20% { transform: translate(7px, -4px) rotate(0.6deg) scale(0.98); }
-    30% { transform: translate(-5px, 3px) rotate(-0.5deg) scale(1.01); }
-    40% { transform: translate(4px, -2px) rotate(0.3deg); }
-    50% { transform: translate(-3px, 2px) rotate(-0.2deg); }
-    65% { transform: translate(2px, -1px) rotate(0.1deg); }
-    80% { transform: translate(-1px, 1px); }
-    100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+
+    10% {
+        transform: translate(-8px, 5px) rotate(-0.8deg) scale(1.02);
+    }
+
+    20% {
+        transform: translate(7px, -4px) rotate(0.6deg) scale(0.98);
+    }
+
+    30% {
+        transform: translate(-5px, 3px) rotate(-0.5deg) scale(1.01);
+    }
+
+    40% {
+        transform: translate(4px, -2px) rotate(0.3deg);
+    }
+
+    50% {
+        transform: translate(-3px, 2px) rotate(-0.2deg);
+    }
+
+    65% {
+        transform: translate(2px, -1px) rotate(0.1deg);
+    }
+
+    80% {
+        transform: translate(-1px, 1px);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
 }
 
 /* ===== EXIT ANIMATIONS =====
@@ -648,9 +897,22 @@ body {
 }
 
 @keyframes screenExit {
-    0% { opacity: 1; filter: blur(0) brightness(1); transform: scale(1); }
-    30% { filter: brightness(1.8); transform: scale(1.03); }
-    100% { opacity: 0; filter: brightness(3) blur(15px); transform: scale(1.08); }
+    0% {
+        opacity: 1;
+        filter: blur(0) brightness(1);
+        transform: scale(1);
+    }
+
+    30% {
+        filter: brightness(1.8);
+        transform: scale(1.03);
+    }
+
+    100% {
+        opacity: 0;
+        filter: brightness(3) blur(15px);
+        transform: scale(1.08);
+    }
 }
 
 .char-left.exit {
@@ -658,20 +920,24 @@ body {
 }
 
 @keyframes swordLeftOut {
-    0% { 
-        transform: translateX(0) rotate(-5deg) scale(1); 
-        clip-path: inset(0 0 0 0); 
-        filter: blur(0); 
-        opacity: 1; 
+    0% {
+        transform: translateX(0) rotate(-5deg) scale(1);
+        clip-path: inset(0 0 0 0);
+        filter: blur(0);
+        opacity: 1;
     }
-    15% { 
-        filter: blur(5px) brightness(1.5); /* Motion blur on exit */
+
+    15% {
+        filter: blur(5px) brightness(1.5);
+        /* Motion blur on exit */
     }
-    100% { 
-        transform: translateX(-450px) rotate(-70deg) scale(0.3); 
-        clip-path: inset(50% 0 50% 0); /* Contract back to line strip */
-        filter: blur(10px); 
-        opacity: 0; 
+
+    100% {
+        transform: translateX(-450px) rotate(-70deg) scale(0.3);
+        clip-path: inset(50% 0 50% 0);
+        /* Contract back to line strip */
+        filter: blur(10px);
+        opacity: 0;
     }
 }
 
@@ -680,20 +946,23 @@ body {
 }
 
 @keyframes characterCenterOut {
-    0% { 
-        transform: translateY(0) scale(1); 
-        clip-path: inset(0 0 0 0); 
-        filter: blur(0); 
-        opacity: 1; 
+    0% {
+        transform: translateY(0) scale(1);
+        clip-path: inset(0 0 0 0);
+        filter: blur(0);
+        opacity: 1;
     }
-    15% { 
-        filter: blur(5px) brightness(1.5); 
+
+    15% {
+        filter: blur(5px) brightness(1.5);
     }
-    100% { 
-        transform: translateY(250px) scale(0.3) rotate(12deg); 
-        clip-path: inset(50% 0 50% 0); /* Contract back to line strip */
-        filter: blur(10px); 
-        opacity: 0; 
+
+    100% {
+        transform: translateY(250px) scale(0.3) rotate(12deg);
+        clip-path: inset(50% 0 50% 0);
+        /* Contract back to line strip */
+        filter: blur(10px);
+        opacity: 0;
     }
 }
 
@@ -702,31 +971,42 @@ body {
 }
 
 @keyframes swordRightOut {
-    0% { 
-        transform: translateX(0) rotate(5deg) scale(1); 
-        clip-path: inset(0 0 0 0); 
-        filter: blur(0); 
-        opacity: 1; 
+    0% {
+        transform: translateX(0) rotate(5deg) scale(1);
+        clip-path: inset(0 0 0 0);
+        filter: blur(0);
+        opacity: 1;
     }
-    15% { 
-        filter: blur(5px) brightness(1.5); 
+
+    15% {
+        filter: blur(5px) brightness(1.5);
     }
-    100% { 
-        transform: translateX(450px) rotate(70deg) scale(0.3); 
-        clip-path: inset(50% 0 50% 0); /* Contract back to line strip */
-        filter: blur(10px); 
-        opacity: 0; 
+
+    100% {
+        transform: translateX(450px) rotate(70deg) scale(0.3);
+        clip-path: inset(50% 0 50% 0);
+        /* Contract back to line strip */
+        filter: blur(10px);
+        opacity: 0;
     }
 }
 
 .stage_line.exit {
     animation: lineSweepOut 0.35s cubic-bezier(0.55, 0, 1, 0.45) forwards !important;
-    transform-origin: center !important; /* Contract from both sides to center */
+    transform-origin: center !important;
+    /* Contract from both sides to center */
 }
 
 @keyframes lineSweepOut {
-    0% { transform: scaleX(1); opacity: 1; }
-    100% { transform: scaleX(0); opacity: 0; }
+    0% {
+        transform: scaleX(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scaleX(0);
+        opacity: 0;
+    }
 }
 
 .line-sweep-edge.exit {
@@ -734,9 +1014,19 @@ body {
 }
 
 @keyframes lineEdgeExit {
-    0% { opacity: 0; left: 50%; }
-    40% { opacity: 1; }
-    100% { left: 0%; opacity: 0; }
+    0% {
+        opacity: 0;
+        left: 50%;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    100% {
+        left: 0%;
+        opacity: 0;
+    }
 }
 
 .enter-letter.exit {
@@ -744,15 +1034,16 @@ body {
 }
 
 @keyframes letterOut {
-    0% { 
-        transform: translateY(0) scale(1); 
-        opacity: 1; 
-        filter: blur(0); 
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        filter: blur(0);
     }
-    100% { 
-        transform: translateY(-70px) scale(0.2); 
-        opacity: 0; 
-        filter: blur(6px); 
+
+    100% {
+        transform: translateY(-70px) scale(0.2);
+        opacity: 0;
+        filter: blur(6px);
     }
 }
 
@@ -761,8 +1052,15 @@ body {
 }
 
 @keyframes trackingContract {
-    0% { letter-spacing: 8px; opacity: 1; }
-    100% { letter-spacing: 25px; opacity: 0; }
+    0% {
+        letter-spacing: 8px;
+        opacity: 1;
+    }
+
+    100% {
+        letter-spacing: 25px;
+        opacity: 0;
+    }
 }
 
 /* ===== HERO AREA ===== */
@@ -782,8 +1080,15 @@ body {
 }
 
 @keyframes heroIn {
-    0% { opacity: 0; filter: blur(8px); }
-    100% { opacity: 1; filter: blur(0); }
+    0% {
+        opacity: 0;
+        filter: blur(8px);
+    }
+
+    100% {
+        opacity: 1;
+        filter: blur(0);
+    }
 }
 
 .heroArea_text {
@@ -804,22 +1109,306 @@ body {
 }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-    .enter_screen_imgs { gap: 30px; }
-    .sword-left, .sword-right { width: 65px; height: 65px; }
-    .character-center { width: 120px; height: 120px; }
-    .enter-letter { font-size: 14px; }
-    .enter-letter-space { width: 6px; }
-    .heroArea_text h1 { font-size: 40px; }
-    .heroArea_text p { font-size: 16px; }
+
+/* Large tablets / small desktops */
+@media (max-width: 1024px) {
+    .enter_screen_imgs {
+        gap: 40px;
+    }
+
+    .sword-left {
+        width: 80px;
+        height: 80px;
+    }
+
+    .sword-right {
+        width: 90px;
+        height: 90px;
+    }
+
+    .character-center {
+        width: 140px;
+        height: 140px;
+    }
+
+    .enter-letter {
+        font-size: 16px;
+    }
+
+    .enter-letter-space {
+        width: 7px;
+    }
+
+    .enter-screen-title {
+        font-size: 26px !important;
+    }
+
+    .enter-screen-title_1 {
+        font-size: 13px !important;
+    }
+
+    .enter-screen-title_1 {
+        top: 55px !important;
+    }
+
+    .heroArea_text h1 {
+        font-size: 44px;
+    }
+
+    .heroArea_text p {
+        font-size: 17px;
+    }
 }
 
-@media (max-width: 480px) {
-    .enter_screen_imgs { gap: 20px; }
-    .sword-left, .sword-right { width: 50px; height: 50px; }
-    .character-center { width: 90px; height: 90px; }
-    .enter-letter { font-size: 12px; }
-    .enter-letter-space { width: 4px; }
-    .heroArea_text h1 { font-size: 32px; }
-    .heroArea_text p { font-size: 14px; }
+/* Tablets */
+@media (max-width: 768px) {
+    .enter_screen_imgs {
+        gap: 35px;
+        min-height: 160px;
+    }
+
+    .sword-left {
+        width: 75px;
+        height: 75px;
+    }
+
+    .sword-right {
+        width: 80px;
+        height: 80px;
+    }
+
+    .character-center {
+        width: 130px;
+        height: 130px;
+    }
+
+    .enter-letter {
+        font-size: 14px;
+    }
+
+    .enter-letter-space {
+        width: 6px;
+    }
+
+    .enter-text-container {
+        bottom: 12%;
+    }
+
+    .enter-screen-title {
+        font-size: 22px !important;
+        top: 15px !important;
+    }
+
+    .enter-screen-title_1 {
+        font-size: 11px !important;
+        top: 45px !important;
+    }
+
+    .heroArea_text h1 {
+        font-size: 40px;
+    }
+
+    .heroArea_text p {
+        font-size: 16px;
+    }
+}
+
+/* Large phones */
+@media (max-width: 540px) {
+    .enter_screen_imgs {
+        gap: 25px;
+        min-height: 140px;
+    }
+
+    .sword-left {
+        width: 70px;
+        height: 70px;
+    }
+
+    .sword-right {
+        width: 75px;
+        height: 75px;
+    }
+
+    .character-center {
+        width: 120px;
+        height: 120px;
+    }
+
+    .enter-letter {
+        font-size: 13px;
+    }
+
+    .enter-letter-space {
+        width: 5px;
+    }
+
+    .enter-text-container {
+        bottom: 10%;
+    }
+
+    .enter-screen-title {
+        font-size: 18px !important;
+        top: 12px !important;
+    }
+
+    .enter-screen-title_1 {
+        font-size: 10px !important;
+        top: 38px !important;
+    }
+
+    .heroArea_text h1 {
+        font-size: 36px;
+    }
+
+    .heroArea_text p {
+        font-size: 15px;
+    }
+}
+
+/* Small phones */
+@media (max-width: 380px) {
+    .enter_screen_imgs {
+        gap: 18px;
+        min-height: 120px;
+    }
+
+    .sword-left {
+        width: 60px;
+        height: 60px;
+    }
+
+    .sword-right {
+        width: 65px;
+        height: 65px;
+    }
+
+    .character-center {
+        width: 100px;
+        height: 100px;
+    }
+
+    .enter-letter {
+        font-size: 11px;
+    }
+
+    .enter-letter-space {
+        width: 4px;
+    }
+
+    .enter-text-container {
+        bottom: 8%;
+    }
+
+    .enter-screen-title {
+        font-size: 16px !important;
+        top: 10px !important;
+    }
+
+    .enter-screen-title_1 {
+        font-size: 9px !important;
+        top: 32px !important;
+    }
+
+    .heroArea_text h1 {
+        font-size: 30px;
+    }
+
+    .heroArea_text p {
+        font-size: 14px;
+    }
+}
+
+/* Landscape phones - more horizontal space, adjust layout */
+@media (max-height: 500px) and (orientation: landscape) {
+    .enter_screen_imgs {
+        gap: 28px;
+        min-height: 100px;
+    }
+
+    .sword-left {
+        width: 65px;
+        height: 65px;
+    }
+
+    .sword-right {
+        width: 70px;
+        height: 70px;
+    }
+
+    .character-center {
+        width: 110px;
+        height: 110px;
+    }
+
+    .enter-letter {
+        font-size: 12px;
+    }
+
+    .enter-letter-space {
+        width: 5px;
+    }
+
+    .enter-text-container {
+        bottom: 6%;
+    }
+
+    .enter-screen-title {
+        font-size: 16px !important;
+        top: 8px !important;
+    }
+
+    .enter-screen-title_1 {
+        font-size: 9px !important;
+        top: 28px !important;
+    }
+
+    .stage_line_container {
+        top: 45%;
+    }
+}
+
+/* Very small landscape (foldables, tiny screens) */
+@media (max-height: 350px) and (orientation: landscape) {
+    .enter_screen_imgs {
+        gap: 18px;
+        min-height: 80px;
+    }
+
+    .sword-left {
+        width: 50px;
+        height: 50px;
+    }
+
+    .sword-right {
+        width: 55px;
+        height: 55px;
+    }
+
+    .character-center {
+        width: 85px;
+        height: 85px;
+    }
+
+    .enter-letter {
+        font-size: 10px;
+    }
+
+    .enter-letter-space {
+        width: 3px;
+    }
+
+    .enter-text-container {
+        bottom: 4%;
+    }
+
+    .enter-screen-title {
+        font-size: 14px !important;
+        top: 5px !important;
+    }
+
+    .enter-screen-title_1 {
+        font-size: 8px !important;
+        top: 22px !important;
+    }
 }
