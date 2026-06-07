@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev. Muntahi</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            background: #000;
+            overflow: hidden;
+            font-weight:400;
+        }
+
+        .heroArea {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Video Background */
+        .heroVideo {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        /* Overlay */
+        .heroOverlay {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(
+                    to bottom,
+                    rgba(0, 0, 0, .45),
+                    rgba(0, 0, 0, .75)
+                );
+            z-index: 2;
+        }
+
+        /* Glass Card */
+        .heroArea_text {
+            position: relative;
+            z-index: 3;
+
+            width: 550px;
+            max-width: 92%;
+            font-weight: 600;
+
+            text-align: center;
+
+            padding: 35px;
+            margin-top: 30px;
+
+            border-radius: 24px;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
+
+
+            color: white;
+
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .heroArea_img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+
+            border: 3px solid rgba(255,255,255,.15);
+
+            margin-bottom: 15px;
+        }
+
+        .heroArea_title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff !important;
+
+            background: linear-gradient(
+                90deg,
+                #fff,
+                #3b82f6,
+                #fff
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .heroArea_desc {
+            margin-top: 15px;
+            opacity: .85;
+            line-height: 1.7;
+        }
+
+        .heroBadges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+
+            margin-top: 18px;
+        }
+
+        .heroBadges span {
+            padding: 8px 14px;
+
+            border-radius: 999px;
+
+            background: rgba(255,255,255,.08);
+
+            border: 1px solid rgba(255,255,255,.1);
+
+            font-size: .8rem;
+        }
+
+        .heroLocation {
+            margin-top: 20px;
+            opacity: .8;
+        }
+
+        .heroSocials {
+            margin-top: 25px;
+
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .heroSocials a {
+            width: 50px;
+            height: 50px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 50%;
+
+            text-decoration: none;
+            color: white;
+
+            font-size: 1.2rem;
+
+            background: rgba(255,255,255,.08);
+
+            border: 1px solid rgba(255,255,255,.1);
+
+            transition: .3s ease;
+        }
+
+        .heroSocials a:hover {
+            transform: translateY(-5px) scale(1.1);
+
+            background: rgba(139,92,246,.25);
+
+            box-shadow:
+                0 0 20px rgba(139,92,246,.5);
+        }
+
+        .status {
+            margin-top: 18px;
+            color: #4ade80;
+            font-size: .9rem;
+        }
+
+        @media(max-width:600px) {
+
+            .heroArea_title {
+                font-size: 1.8rem;
+            }
+
+            .heroArea_text {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="heroArea">
+
+        <!-- Video -->
+        <video class="heroVideo" autoplay muted loop playsinline>
+            <source src="static/video/Background01.mp4" type="video/mp4">
+        </video>
+
+        <!-- Overlay -->
+        <div class="heroOverlay"></div>
+
+        <!-- Card -->
+        <div class="heroArea_text">
+
+            <img
+                src="static/image/font_mc_skin.png"
+                alt="Profile"
+                class="heroArea_img">
+
+            <h1 class="heroArea_title">
+                Dev. Muntahi
+            </h1>
+
+            <p class="heroArea_desc">
+                I don't just write code—I build AI, create games,
+                design graphics, and transform ideas into reality
+                as an engineer and designer.
+            </p>
+
+            <div class="heroLocation" style="font-size:12px !important;">
+                <i class="fa-solid fa-location-dot"></i>
+                Dhaka, Bangladesh
+            </div>
+
+            <div class="status">
+                ● Available for Projects
+            </div>
+
+            <div class="heroSocials">
+
+                <a href="#" title="Discord">
+                    <i class="fa-brands fa-discord"></i>
+                </a>
+
+                <a href="#" title="GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+
+                <a href="#" title="YouTube">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+
+                <a href="#" title="Steam">
+                    <i class="fa-brands fa-steam"></i>
+                </a>
+
+                <a href="#" title="Roblox">
+                    <i class="fa-solid fa-cube"></i>
+                </a>
+
+                <a href="#" title="Email">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>

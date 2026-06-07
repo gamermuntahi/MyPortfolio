@@ -215,10 +215,9 @@ document.addEventListener('DOMContentLoaded', function () {
             enterScreen.classList.add('exit-active');
         }, 500);
 
-        // T+1300ms: Show hero area, remove enter screen
+        // T+1300ms: Navigate to home.html after exit animation completes
         setTimeout(() => {
-            heroArea.classList.add('show');
-            enterScreen.style.display = 'none';
+            window.location.href = 'home.html';
         }, 1300);
     }
 
