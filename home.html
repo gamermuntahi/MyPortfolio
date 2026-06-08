@@ -1,290 +1,430 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dev. Muntahi</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dev. Muntahi</title>
 
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Segoe UI", sans-serif;
-        }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
 
-        body {
-            background: #000;
-            overflow: hidden;
-            font-weight:400;
-        }
+body {
+  background: #000;
+  overflow: hidden;
+  opacity: 0;
+  animation: fadeIn 0.6s ease forwards;
+}
 
-        .heroArea {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
+@keyframes fadeIn { to { opacity: 1; } }
 
-        /* Video Background */
-        .heroVideo {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 1;
-        }
+/* NAVBAR */
+.navbar {
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1100px;
+  height: 60px;
 
-        /* Overlay */
-        .heroOverlay {
-            position: absolute;
-            inset: 0;
-            background:
-                linear-gradient(
-                    to bottom,
-                    rgba(0, 0, 0, .45),
-                    rgba(0, 0, 0, .75)
-                );
-            z-index: 2;
-        }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
 
-        /* Glass Card */
-        .heroArea_text {
-            position: relative;
-            z-index: 3;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
 
-            width: 550px;
-            max-width: 92%;
-            font-weight: 600;
+  z-index: 100;
 
-            text-align: center;
+  /* NEW */
+  animation: navIn 0.8s ease forwards;
+}
 
-            padding: 35px;
-            margin-top: 30px;
+@keyframes navIn {
+  from { transform: translate(-50%, -30px); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
+}
 
-            border-radius: 24px;
+.nav-left {
+  color: white;
+  font-weight: 600;
+  animation: glow 3s infinite ease-in-out;
+}
 
-            background: rgba(255, 255, 255, 0.08);
+@keyframes glow {
+  0%,100% { text-shadow: 0 0 5px #a855f7; }
+  50% { text-shadow: 0 0 15px #3b82f6; }
+}
 
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+.nav-links {
+  display: flex;
+  gap: 18px;
+}
 
-            border: 1px solid rgba(255, 255, 255, 0.15);
+.nav-links a {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.3s;
+}
 
+.nav-links a:hover {
+  color: white;
+  transform: translateY(-2px);
+}
 
-            color: white;
+.volume {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+}
 
-            animation: float 5s ease-in-out infinite;
-        }
+.volume input {
+  width: 120px;
+  accent-color: #a855f7;
+}
 
-        @keyframes float {
-            0%,100% {
-                transform: translateY(0px);
-            }
+/* HERO */
+.heroArea {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-            50% {
-                transform: translateY(-8px);
-            }
-        }
+.heroVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
 
-        .heroArea_img {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            object-fit: cover;
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(0,0,0,0.2), rgba(0,0,0,0.92));
+  z-index: 2;
+}
 
-            border: 3px solid rgba(255,255,255,.15);
+/* CARD */
+.heroArea_text {
+  position: relative;
+  z-index: 3;
+  width: 550px;
+  max-width: 92%;
+  padding: 35px;
+  border-radius: 24px;
 
-            margin-bottom: 15px;
-        }
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(22px);
+  border: 1px solid rgba(255,255,255,0.15);
 
-        .heroArea_title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #fff !important;
+  text-align: center;
+  color: white;
 
-            background: linear-gradient(
-                90deg,
-                #fff,
-                #3b82f6,
-                #fff
-            );
+  /* NEW */
+  animation: cardIn 1s ease forwards;
+}
 
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+@keyframes cardIn {
+  from { transform: translateY(40px) scale(0.95); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
 
-        .heroArea_desc {
-            margin-top: 15px;
-            opacity: .85;
-            line-height: 1.7;
-        }
+/* IMAGE */
+.heroArea_text img {
+  animation: floatImg 3s ease-in-out infinite;
+}
 
-        .heroBadges {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
+@keyframes floatImg {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
 
-            margin-top: 18px;
-        }
+/* TEXT */
+.heroArea_text h1 {
+  animation: textGlow 2.5s infinite ease-in-out;
+}
 
-        .heroBadges span {
-            padding: 8px 14px;
+@keyframes textGlow {
+  0%,100% { text-shadow: 0 0 0px #a855f7; }
+  50% { text-shadow: 0 0 18px #a855f7; }
+}
 
-            border-radius: 999px;
+/* META */
+.meta {
+  margin-top: 8px;
+  font-size: 13px;
+  opacity: 0.8;
+  animation: fadeUp 1.2s ease forwards;
+}
 
-            background: rgba(255,255,255,.08);
+.status {
+  margin-top: 10px;
+  color: #22c55e;
+  font-size: 14px;
+  animation: fadeUp 1.4s ease forwards;
+}
 
-            border: 1px solid rgba(255,255,255,.1);
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-            font-size: .8rem;
-        }
+/* ICONS */
+.icons {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
 
-        .heroLocation {
-            margin-top: 20px;
-            opacity: .8;
-        }
+.icons i {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-        .heroSocials {
-            margin-top: 25px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: white;
+  cursor: pointer;
 
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
+  transition: 0.3s;
 
-        .heroSocials a {
-            width: 50px;
-            height: 50px;
+  /* NEW */
+  animation: iconPop 1s ease forwards;
+  opacity: 0;
+}
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
+.icons i:nth-child(1){ animation-delay: 0.2s; }
+.icons i:nth-child(2){ animation-delay: 0.3s; }
+.icons i:nth-child(3){ animation-delay: 0.4s; }
+.icons i:nth-child(4){ animation-delay: 0.5s; }
+.icons i:nth-child(5){ animation-delay: 0.6s; }
 
-            border-radius: 50%;
+@keyframes iconPop {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
 
-            text-decoration: none;
-            color: white;
+.icons i:hover {
+  transform: translateY(-3px) scale(1.1);
+  background: rgba(168,85,247,0.25);
+}
 
-            font-size: 1.2rem;
+/* START SCREEN */
+.startScreen {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
 
-            background: rgba(255,255,255,.08);
+  animation: startFade 1s ease forwards;
+}
+/* SOUND METER */
+.sound-meter {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 120px;
+  z-index: 20;
+}
 
-            border: 1px solid rgba(255,255,255,.1);
+.sound-meter.left { left: 18px; }
+.sound-meter.right { right: 18px; }
 
-            transition: .3s ease;
-        }
+.bar {
+  width: 3px;
+  height: 10px;
+  background: linear-gradient(to top, #3b82f6, #a855f7, #ec4899);
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(168,85,247,0.5);
+  transition: height 0.05s linear;
+}
 
-        .heroSocials a:hover {
-            transform: translateY(-5px) scale(1.1);
+@keyframes startFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-            background: rgba(139,92,246,.25);
+/* METER */
+.wave {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 20px;
+  background: linear-gradient(to top,#3b82f6,#a855f7,#ec4899);
+  box-shadow: 0 0 12px rgba(168,85,247,0.6);
 
-            box-shadow:
-                0 0 20px rgba(139,92,246,.5);
-        }
+  animation: waveIdle 1.5s infinite ease-in-out;
+}
 
-        .status {
-            margin-top: 18px;
-            color: #4ade80;
-            font-size: .9rem;
-        }
-
-        @media(max-width:600px) {
-
-            .heroArea_title {
-                font-size: 1.8rem;
-            }
-
-            .heroArea_text {
-                padding: 25px;
-            }
-        }
-    </style>
+@keyframes waveIdle {
+  0%,100% { filter: brightness(1); }
+  50% { filter: brightness(1.5); }
+}
+</style>
 </head>
 
 <body>
 
-    <section class="heroArea">
+<div class="startScreen" id="startScreen">
+  Click anywhere to enter 🔊
+</div>
 
-        <!-- Video -->
-        <video class="heroVideo" autoplay muted loop playsinline>
-            <source src="static/video/Background01.mp4" type="video/mp4">
-        </video>
+<!-- NAV -->
+<div class="navbar">
+  <div class="nav-left">Dev. Muntahi</div>
 
-        <!-- Overlay -->
-        <div class="heroOverlay"></div>
+  <div class="nav-links">
+    <a href="#">Home</a>
+    <a href="#">Projects</a>
+    <a href="#">Skills</a>
+    <a href="#">Contact</a>
+  </div>
 
-        <!-- Card -->
-        <div class="heroArea_text">
+  <div class="volume">
+    <i class="fa-solid fa-volume-high"></i>
+    <input type="range" min="0" max="1" step="0.01" id="vol">
+  </div>
+</div>
 
-            <img
-                src="static/image/font_mc_skin.png"
-                alt="Profile"
-                class="heroArea_img">
+<!-- HERO -->
+<section class="heroArea">
+  <!-- SOUND METERS (EQUALIZER) -->
+<div class="sound-meter left" id="meterLeft"></div>
+<div class="sound-meter right" id="meterRight"></div>
 
-            <h1 class="heroArea_title">
-                Dev. Muntahi
-            </h1>
+  <video class="heroVideo" id="bgVideo" autoplay muted loop playsinline>
+    <source src="static/video/Background01.mp4">
+  </video>
 
-            <p class="heroArea_desc">
-                I don't just write code—I build AI, create games,
-                design graphics, and transform ideas into reality
-                as an engineer and designer.
-            </p>
+  <div class="heroOverlay"></div>
 
-            <div class="heroLocation" style="font-size:12px !important;">
-                <i class="fa-solid fa-location-dot"></i>
-                Dhaka, Bangladesh
-            </div>
+  <div class="heroArea_text">
+    <img src="static/image/font_mc_skin.png" width="110"
+      style="border-radius:50%; border:3px solid rgba(255,255,255,0.15)"/>
 
-            <div class="status">
-                ● Available for Projects
-            </div>
+    <h1>Dev. Muntahi</h1>
+    <p>I don't just write code—I build AI, create games, design graphics, and transform ideas into reality.</p>
 
-            <div class="heroSocials">
+    <div class="meta">📍 Dhaka, Bangladesh</div>
+    <div class="status">● Available for Projects</div>
 
-                <a href="#" title="Discord">
-                    <i class="fa-brands fa-discord"></i>
-                </a>
+    <div class="icons">
+      <i class="fa-brands fa-discord"></i>
+      <i class="fa-brands fa-github"></i>
+      <i class="fa-brands fa-youtube"></i>
+      <i class="fa-brands fa-steam"></i>
+      <i class="fa-solid fa-envelope"></i>
+    </div>
+  </div>
 
-                <a href="#" title="GitHub">
-                    <i class="fa-brands fa-github"></i>
-                </a>
+</section>
 
-                <a href="#" title="YouTube">
-                    <i class="fa-brands fa-youtube"></i>
-                </a>
+<!-- METERS -->
+<div class="meter left"><div class="line"><div class="wave" id="waveL"></div></div></div>
+<div class="meter right"><div class="line"><div class="wave" id="waveR"></div></div></div>
 
-                <a href="#" title="Steam">
-                    <i class="fa-brands fa-steam"></i>
-                </a>
+<audio id="bgAudio" loop>
+  <source src="static/audio/Background01.mp3">
+</audio>
 
-                <a href="#" title="Roblox">
-                    <i class="fa-solid fa-cube"></i>
-                </a>
+<script>
+const audio = document.getElementById("bgAudio");
+const video = document.getElementById("bgVideo");
+const vol = document.getElementById("vol");
+const startScreen = document.getElementById("startScreen");
 
-                <a href="#" title="Email">
-                    <i class="fa-solid fa-envelope"></i>
-                </a>
+vol.addEventListener("input", e => {
+  audio.volume = e.target.value;
+});
 
-            </div>
+const ctx = new (window.AudioContext || window.webkitAudioContext)();
+const analyser = ctx.createAnalyser();
+analyser.fftSize = 64;
 
-        </div>
+const source = ctx.createMediaElementSource(audio);
+source.connect(analyser);
+analyser.connect(ctx.destination);
 
-    </section>
+const data = new Uint8Array(analyser.frequencyBinCount);
+
+const waveL = document.getElementById("waveL");
+const waveR = document.getElementById("waveR");
+
+startScreen.addEventListener("click", async () => {
+  startScreen.style.display = "none";
+  await ctx.resume();
+  audio.play();
+  video.play();
+});
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  analyser.getByteFrequencyData(data);
+
+  for (let i = 0; i < bars; i++) {
+    let index = Math.floor((i / bars) * data.length);
+    let value = data[index];
+
+    let height = Math.max(5, value * 0.6);
+
+    leftBars[i].style.height = height + "px";
+    rightBars[i].style.height = height + "px";
+  }
+}
+
+
+
+/* CREATE BARS */
+const bars = 12;
+
+for (let i = 0; i < bars; i++) {
+  let b1 = document.createElement("div");
+  let b2 = document.createElement("div");
+
+  b1.classList.add("bar");
+  b2.classList.add("bar");
+
+  meterLeft.appendChild(b1);
+  meterRight.appendChild(b2);
+}
+
+const leftBars = meterLeft.querySelectorAll(".bar");
+const rightBars = meterRight.querySelectorAll(".bar");
+
+
+animate();
+</script>
 
 </body>
-
 </html>

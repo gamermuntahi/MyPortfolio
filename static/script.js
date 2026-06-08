@@ -216,6 +216,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 500);
 
         // T+1300ms: Navigate to home.html after exit animation completes
+        document.body.classList.add('fade-out');
         setTimeout(() => {
             window.location.href = 'home.html';
         }, 1300);
