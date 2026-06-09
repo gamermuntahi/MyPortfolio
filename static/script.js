@@ -147,6 +147,15 @@ document.addEventListener('DOMContentLoaded', function () {
         isExiting = true;
         parallaxActive = false;
 
+        // Create AudioContext during user gesture for browser autoplay policy
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const analyserNode = audioCtx.createAnalyser();
+        analyserNode.fftSize = 64;
+        const bgAudio = document.getElementById("bgAudio");
+        const bgAudioSource = audioCtx.createMediaElementSource(bgAudio);
+        bgAudioSource.connect(analyserNode);
+        analyserNode.connect(audioCtx.destination);
+
         // Stop text breathing
         textContainer.classList.remove('breathing');
 
@@ -215,10 +224,57 @@ document.addEventListener('DOMContentLoaded', function () {
             enterScreen.classList.add('exit-active');
         }, 500);
 
-        // T+1300ms: Navigate to home.html after exit animation completes
-        document.body.classList.add('fade-out');
+        // T+1300ms: Show home content after exit animation completes
         setTimeout(() => {
-            window.location.href = 'home.html';
+            document.querySelector('.bg-video').style.display = 'none';
+            document.getElementById('mainDiv').style.display = 'none';
+            const homeContent = document.getElementById('homeContent');
+            homeContent.classList.add('show');
+
+            // Enable scrolling for home content
+            document.body.style.overflow = 'auto';
+
+            // Start audio and video
+            audioCtx.resume();
+            bgAudio.play();
+            document.getElementById("bgVideo").play();
+
+            // Volume control
+            const vol = document.getElementById("vol");
+            vol.addEventListener("input", e => {
+                bgAudio.volume = e.target.value;
+            });
+
+            // Create equalizer bars
+            const meterLeft = document.getElementById("meterLeft");
+            const meterRight = document.getElementById("meterRight");
+            const barsCount = 12;
+            for (let i = 0; i < barsCount; i++) {
+                let b1 = document.createElement("div");
+                let b2 = document.createElement("div");
+                b1.classList.add("bar");
+                b2.classList.add("bar");
+                meterLeft.appendChild(b1);
+                meterRight.appendChild(b2);
+            }
+
+            const leftBars = meterLeft.querySelectorAll(".bar");
+            const rightBars = meterRight.querySelectorAll(".bar");
+            const freqData = new Uint8Array(analyserNode.frequencyBinCount);
+
+            function animateMeters() {
+                requestAnimationFrame(animateMeters);
+                analyserNode.getByteFrequencyData(freqData);
+                for (let i = 0; i < barsCount; i++) {
+                    let index = Math.floor((i / barsCount) * freqData.length);
+                    let value = freqData[index];
+                    let height = Math.max(5, value * 0.6);
+                    leftBars[i].style.height = height + "px";
+                    rightBars[i].style.height = height + "px";
+                }
+            }
+
+            animateMeters();
         }, 1300);
     }
 

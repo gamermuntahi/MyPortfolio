@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="static/image/Favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
     <title>Muntahi</title>
 </head>
 
@@ -66,6 +67,268 @@
             </div>
         </nav>
     </div>
+
+    <!-- HOME CONTENT (hidden initially, shown after enter screen exit) -->
+    <div id="homeContent">
+        <!-- NAV -->
+        <div class="navbar">
+            <div class="nav-left">Dev. Muntahi</div>
+
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Projects</a>
+                <a href="#">Skills</a>
+                <a href="#">Contact</a>
+            </div>
+
+            <div class="volume">
+                <i class="fa-solid fa-volume-high"></i>
+                <input type="range" min="0" max="1" step="0.01" id="vol">
+            </div>
+        </div>
+
+        <!-- HERO -->
+        <section class="heroArea">
+            <!-- SOUND METERS (EQUALIZER) -->
+            <div class="sound-meter left" id="meterLeft"></div>
+            <div class="sound-meter right" id="meterRight"></div>
+
+            <video class="heroVideo" id="bgVideo" autoplay muted loop playsinline>
+                <source src="static/video/Background01.mp4">
+            </video>
+
+            <div class="heroOverlay"></div>
+
+            <div class="heroArea_text">
+                <img src="static/image/font_mc_skin.png" width="110"
+                    style="border-radius:50%; border:3px solid rgba(255,255,255,0.15)"/>
+
+                <h1>Dev. Muntahi</h1>
+                <p>I don't just write code—I build AI, create games, design graphics, and transform ideas into reality.</p>
+
+                <div class="meta">📍 Dhaka, Bangladesh</div>
+                <div class="status">● Available for Projects</div>
+
+                <div class="icons">
+                    <i class="fa-brands fa-discord"></i>
+                    <i class="fa-brands fa-github"></i>
+                    <i class="fa-brands fa-youtube"></i>
+                    <i class="fa-brands fa-steam"></i>
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- METERS -->
+        <div class="meter left"><div class="line"><div class="wave" id="waveL"></div></div></div>
+        <div class="meter right"><div class="line"><div class="wave" id="waveR"></div></div></div>
+
+        <audio id="bgAudio" loop>
+            <source src="static/audio/Background01.mp3">
+        </audio>
+
+    <div class="inner_part">
+
+        <!-- ABOUT -->
+    <section class="about_sestion" id="about">
+
+        <h2>About Me</h2>
+
+        <img src="static/image/font_mc_skin.png"
+             alt="Dev. Muntahi"
+             width="300">
+
+        <h3>Chief of Developer</h3>
+
+        <p>
+            Hello, I'm Muntahi, a Full-Stack Developer, AI Developer,
+            Game Developer, Automation Engineer, and Technology Entrepreneur.
+        </p>
+
+        <p>
+            I specialize in creating powerful software solutions,
+            intelligent AI systems, modern websites, desktop applications,
+            game projects, and business automation platforms.
+        </p>
+
+        <p>
+            Founder of Open Tech Solutions (OTS) and GM's School (GMS),
+            with experience in web development, software engineering,
+            artificial intelligence, UI/UX design, game development,
+            and digital product creation.
+        </p>
+
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="project" id="projects">
+
+        <h2>Featured Projects</h2>
+
+        <div class="project-card">
+            <img src="https://placehold.co/800x450?text=Deffin+AI"
+                 alt="Deffin AI">
+
+            <h3>Deffin AI</h3>
+
+            <p>
+                Advanced AI assistant designed for productivity,
+                conversations, automation, and intelligent responses.
+            </p>
+        </div>
+
+        <div class="project-card">
+            <img src="https://placehold.co/800x450?text=Jarvis+AI"
+                 alt="Jarvis AI">
+
+            <h3>Jarvis AI</h3>
+
+            <p>
+                Offline-capable AI assistant with local learning,
+                voice interaction, and intelligent response systems.
+            </p>
+        </div>
+
+        <div class="project-card">
+            <img src="https://placehold.co/800x450?text=GMlib"
+                 alt="GMlib">
+
+            <h3>GMlib</h3>
+
+            <p>
+                Python utility library providing advanced tools,
+                helpers, and developer-focused modules.
+            </p>
+        </div>
+
+        <div class="project-card">
+            <img src="https://placehold.co/800x450?text=Advanced+File+Manager"
+                 alt="Advanced File Manager">
+
+            <h3>Advanced File Manager</h3>
+
+            <p>
+                Desktop file management solution with advanced
+                navigation and productivity features.
+            </p>
+        </div>
+
+        <div class="project-card">
+            <img src="https://placehold.co/800x450?text=WhatsApp+Automation"
+                 alt="WhatsApp Automation">
+
+            <h3>WhatsApp Automation System</h3>
+
+            <p>
+                Automation platform for communication workflows,
+                customer support, and business management.
+            </p>
+        </div>
+
+    </section>
+
+    <!-- SKILLS -->
+    <section class="skill" id="skills">
+
+        <h2>Skills & Technologies</h2>
+
+        <img src="https://placehold.co/1200x400?text=Skills+%26+Technologies"
+             alt="Skills Banner">
+
+        <h3>Programming Languages</h3>
+
+        <div>
+            <img src="https://placehold.co/100x100?text=C" alt="C">
+            <img src="https://placehold.co/100x100?text=C%2B%2B" alt="C++">
+            <img src="https://placehold.co/100x100?text=Python" alt="Python">
+            <img src="https://placehold.co/100x100?text=Java" alt="Java">
+            <img src="https://placehold.co/100x100?text=JS" alt="JavaScript">
+            <img src="https://placehold.co/100x100?text=PHP" alt="PHP">
+            <img src="https://placehold.co/100x100?text=Lua" alt="Lua">
+            <img src="https://placehold.co/100x100?text=HTML" alt="HTML">
+            <img src="https://placehold.co/100x100?text=CSS" alt="CSS">
+        </div>
+
+        <h3>Development Areas</h3>
+
+        <ul>
+            <li>Artificial Intelligence</li>
+            <li>Machine Learning</li>
+            <li>Full-Stack Development</li>
+            <li>Desktop Applications</li>
+            <li>API Development</li>
+            <li>Database Design</li>
+            <li>Automation Systems</li>
+            <li>UI/UX Design</li>
+        </ul>
+
+        <h3>Game Development</h3>
+
+        <div>
+            <img src="https://placehold.co/100x100?text=Godot" alt="Godot">
+            <img src="https://placehold.co/100x100?text=Roblox" alt="Roblox">
+            <img src="https://placehold.co/100x100?text=Minecraft" alt="Minecraft">
+            <img src="https://placehold.co/100x100?text=Blender" alt="Blender">
+        </div>
+
+    </section>
+
+    <!-- AWARDS -->
+    <section class="awards" id="awards">
+
+        <h2>Achievements & Highlights</h2>
+
+        <img src="https://placehold.co/1200x400?text=Achievements"
+             alt="Achievements">
+
+        <ul>
+            <li>Founder & Owner of Open Tech Solutions (OTS)</li>
+            <li>Founder & Owner of GM's School (GMS)</li>
+            <li>Creator of Deffin AI</li>
+            <li>Creator of Jarvis AI</li>
+            <li>Creator of GMlib</li>
+            <li>Professional Chess Player</li>
+            <li>Built Multiple Commercial Websites</li>
+            <li>Developed AI & Automation Solutions</li>
+            <li>Advanced Software Engineer</li>
+            <li>Game Developer & System Architect</li>
+        </ul>
+
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+
+        <h2>Get In Touch</h2>
+
+        <img src="https://placehold.co/1200x400?text=Contact+Me"
+             alt="Contact">
+
+        <p>
+            Interested in collaborating, building a project,
+            hiring a developer, or discussing technology?
+        </p>
+
+        <h3>Contact Information</h3>
+
+        <p><strong>Name:</strong> Muntahi</p>
+        <p><strong>Location:</strong> Dhaka, Bangladesh</p>
+        <p><strong>Status:</strong> Available for Projects</p>
+
+        <div>
+            <a href="#">GitHub</a><br>
+            <a href="#">Discord</a><br>
+            <a href="#">YouTube</a><br>
+            <a href="#">Steam</a><br>
+            <a href="#">Email</a>
+        </div>
+
+    </section>
+
+    </div>
+    </div>
+
     <script src="static/script.js"></script>
 </body>
 
