@@ -70,15 +70,20 @@
 
     <!-- HOME CONTENT (hidden initially, shown after enter screen exit) -->
     <div id="homeContent">
+        <!-- Particles Canvas -->
+        <canvas id="particlesCanvas"></canvas>
+
         <!-- NAV -->
-        <div class="navbar">
+        <div class="navbar" id="navbar">
             <div class="nav-left">Dev. Muntahi</div>
 
             <div class="nav-links">
-                <a href="#">Home</a>
-                <a href="#">Projects</a>
-                <a href="#">Skills</a>
-                <a href="#">Contact</a>
+                <a href="#heroArea" data-section="heroArea">Home</a>
+                <a href="#about" data-section="about">About</a>  
+                <a href="#projects" data-section="projects">Projects</a>
+                <a href="#skills" data-section="skills">Skills</a>
+                <a href="#awards" data-section="awards">Achievements</a>
+                <a href="#contact" data-section="contact">Contact</a>
             </div>
 
             <div class="volume">
@@ -88,7 +93,7 @@
         </div>
 
         <!-- HERO -->
-        <section class="heroArea">
+        <section class="heroArea" id="heroArea" data-section="heroArea">
             <!-- SOUND METERS (EQUALIZER) -->
             <div class="sound-meter left" id="meterLeft"></div>
             <div class="sound-meter right" id="meterRight"></div>
@@ -131,197 +136,425 @@
     <div class="inner_part">
 
         <!-- ABOUT -->
-    <section class="about_sestion" id="about">
+    <section class="about_sestion" id="about" data-section="about">
+        <div class="about-gradient-bg"></div>
+        <div class="about-content">
+            <div class="about-avatar-wrap">
+                <div class="about-avatar-ring"></div>
+                <img src="static/image/font_mc_skin.png"
+                     alt="Dev. Muntahi"
+                     class="about-avatar">
+                <div class="about-avatar-glow"></div>
+            </div>
 
-        <h2>About Me</h2>
+            <h2 class="about-title"><i class="fa-solid fa-user-astronaut about-title-icon"></i> About Me</h2>
 
-        <img src="static/image/font_mc_skin.png"
-             alt="Dev. Muntahi"
-             width="300">
+            <h3 class="about-role">Chief of Developer</h3>
 
-        <h3>Chief of Developer</h3>
+            <div class="about-tags">
+                <span class="about-tag"><i class="fa-solid fa-code"></i> Full-Stack Dev</span>
+                <span class="about-tag"><i class="fa-solid fa-brain"></i> AI Developer</span>
+                <span class="about-tag"><i class="fa-solid fa-gamepad"></i> Game Dev</span>
+                <span class="about-tag"><i class="fa-solid fa-robot"></i> Automation Engineer</span>
+                <span class="about-tag"><i class="fa-solid fa-lightbulb"></i> Entrepreneur</span>
+            </div>
 
-        <p>
-            Hello, I'm Muntahi, a Full-Stack Developer, AI Developer,
-            Game Developer, Automation Engineer, and Technology Entrepreneur.
-        </p>
+            <div class="about-text-blocks">
+                <p class="about-text-block">
+                    Hello, I'm Muntahi, a Full-Stack Developer, AI Developer,
+                    Game Developer, Automation Engineer, and Technology Entrepreneur.
+                </p>
 
-        <p>
-            I specialize in creating powerful software solutions,
-            intelligent AI systems, modern websites, desktop applications,
-            game projects, and business automation platforms.
-        </p>
+                <p class="about-text-block">
+                    I specialize in creating powerful software solutions,
+                    intelligent AI systems, modern websites, desktop applications,
+                    game projects, and business automation platforms.
+                </p>
 
-        <p>
-            Founder of Open Tech Solutions (OTS) and GM's School (GMS),
-            with experience in web development, software engineering,
-            artificial intelligence, UI/UX design, game development,
-            and digital product creation.
-        </p>
+                <p class="about-text-block">
+                    Founder of Open Tech Solutions (OTS) and GM's School (GMS),
+                    with experience in web development, software engineering,
+                    artificial intelligence, UI/UX design, game development,
+                    and digital product creation.
+                </p>
+            </div>
 
+            <div class="about-stats">
+                <div class="about-stat">
+                    <span class="about-stat-num">5+</span>
+                    <span class="about-stat-label">Years Experience</span>
+                </div>
+                <div class="about-stat">
+                    <span class="about-stat-num">20+</span>
+                    <span class="about-stat-label">Projects Built</span>
+                </div>
+                <div class="about-stat">
+                    <span class="about-stat-num">3</span>
+                    <span class="about-stat-label">Companies Founded</span>
+                </div>
+                <div class="about-stat">
+                    <span class="about-stat-num">∞</span>
+                    <span class="about-stat-label">Ideas Brewing</span>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- PROJECTS -->
-    <section class="project" id="projects">
+    <section class="project" id="projects" data-section="projects">
 
-        <h2>Featured Projects</h2>
+        <h2 class="section-heading"><i class="fa-solid fa-rocket section-heading-icon"></i> Featured Projects</h2>
 
-        <div class="project-card">
-            <img src="https://placehold.co/800x450?text=Deffin+AI"
-                 alt="Deffin AI">
+        <div class="project-grid">
 
-            <h3>Deffin AI</h3>
+            <div class="project-card">
+                <div class="project-card-img-wrap">
+                    <img src="https://placehold.co/800x450?text=Deffin+AI"
+                         alt="Deffin AI">
+                    <div class="project-card-overlay">
+                        <i class="fa-solid fa-eye"></i> View Project
+                    </div>
+                </div>
+                <div class="project-card-body">
+                    <h3><i class="fa-solid fa-robot project-card-icon"></i> Deffin AI</h3>
+                    <p>
+                        Advanced AI assistant designed for productivity,
+                        conversations, automation, and intelligent responses.
+                    </p>
+                    <div class="project-card-tags">
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">AI</span>
+                        <span class="project-tag">NLP</span>
+                    </div>
+                </div>
+            </div>
 
-            <p>
-                Advanced AI assistant designed for productivity,
-                conversations, automation, and intelligent responses.
-            </p>
-        </div>
+            <div class="project-card">
+                <div class="project-card-img-wrap">
+                    <img src="https://placehold.co/800x450?text=Jarvis+AI"
+                         alt="Jarvis AI">
+                    <div class="project-card-overlay">
+                        <i class="fa-solid fa-eye"></i> View Project
+                    </div>
+                </div>
+                <div class="project-card-body">
+                    <h3><i class="fa-solid fa-microchip project-card-icon"></i> Jarvis AI</h3>
+                    <p>
+                        Offline-capable AI assistant with local learning,
+                        voice interaction, and intelligent response systems.
+                    </p>
+                    <div class="project-card-tags">
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">Voice</span>
+                        <span class="project-tag">ML</span>
+                    </div>
+                </div>
+            </div>
 
-        <div class="project-card">
-            <img src="https://placehold.co/800x450?text=Jarvis+AI"
-                 alt="Jarvis AI">
+            <div class="project-card">
+                <div class="project-card-img-wrap">
+                    <img src="https://placehold.co/800x450?text=GMlib"
+                         alt="GMlib">
+                    <div class="project-card-overlay">
+                        <i class="fa-solid fa-eye"></i> View Project
+                    </div>
+                </div>
+                <div class="project-card-body">
+                    <h3><i class="fa-solid fa-cubes project-card-icon"></i> GMlib</h3>
+                    <p>
+                        Python utility library providing advanced tools,
+                        helpers, and developer-focused modules.
+                    </p>
+                    <div class="project-card-tags">
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">Library</span>
+                        <span class="project-tag">Open Source</span>
+                    </div>
+                </div>
+            </div>
 
-            <h3>Jarvis AI</h3>
+            <div class="project-card">
+                <div class="project-card-img-wrap">
+                    <img src="https://placehold.co/800x450?text=Advanced+File+Manager"
+                         alt="Advanced File Manager">
+                    <div class="project-card-overlay">
+                        <i class="fa-solid fa-eye"></i> View Project
+                    </div>
+                </div>
+                <div class="project-card-body">
+                    <h3><i class="fa-solid fa-folder-tree project-card-icon"></i> Advanced File Manager</h3>
+                    <p>
+                        Desktop file management solution with advanced
+                        navigation and productivity features.
+                    </p>
+                    <div class="project-card-tags">
+                        <span class="project-tag">Desktop</span>
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">UI/UX</span>
+                    </div>
+                </div>
+            </div>
 
-            <p>
-                Offline-capable AI assistant with local learning,
-                voice interaction, and intelligent response systems.
-            </p>
-        </div>
+            <div class="project-card">
+                <div class="project-card-img-wrap">
+                    <img src="https://placehold.co/800x450?text=WhatsApp+Automation"
+                         alt="WhatsApp Automation">
+                    <div class="project-card-overlay">
+                        <i class="fa-solid fa-eye"></i> View Project
+                    </div>
+                </div>
+                <div class="project-card-body">
+                    <h3><i class="fa-solid fa-comments project-card-icon"></i> WhatsApp Automation</h3>
+                    <p>
+                        Automation platform for communication workflows,
+                        customer support, and business management.
+                    </p>
+                    <div class="project-card-tags">
+                        <span class="project-tag">Automation</span>
+                        <span class="project-tag">API</span>
+                        <span class="project-tag">Business</span>
+                    </div>
+                </div>
+            </div>
 
-        <div class="project-card">
-            <img src="https://placehold.co/800x450?text=GMlib"
-                 alt="GMlib">
-
-            <h3>GMlib</h3>
-
-            <p>
-                Python utility library providing advanced tools,
-                helpers, and developer-focused modules.
-            </p>
-        </div>
-
-        <div class="project-card">
-            <img src="https://placehold.co/800x450?text=Advanced+File+Manager"
-                 alt="Advanced File Manager">
-
-            <h3>Advanced File Manager</h3>
-
-            <p>
-                Desktop file management solution with advanced
-                navigation and productivity features.
-            </p>
-        </div>
-
-        <div class="project-card">
-            <img src="https://placehold.co/800x450?text=WhatsApp+Automation"
-                 alt="WhatsApp Automation">
-
-            <h3>WhatsApp Automation System</h3>
-
-            <p>
-                Automation platform for communication workflows,
-                customer support, and business management.
-            </p>
         </div>
 
     </section>
 
     <!-- SKILLS -->
-    <section class="skill" id="skills">
+    <section class="skill" id="skills" data-section="skills">
 
-        <h2>Skills & Technologies</h2>
+        <h2 class="section-heading"><i class="fa-solid fa-layer-group section-heading-icon"></i> Skills & Technologies</h2>
 
-        <img src="https://placehold.co/1200x400?text=Skills+%26+Technologies"
-             alt="Skills Banner">
-
-        <h3>Programming Languages</h3>
-
-        <div>
-            <img src="https://placehold.co/100x100?text=C" alt="C">
-            <img src="https://placehold.co/100x100?text=C%2B%2B" alt="C++">
-            <img src="https://placehold.co/100x100?text=Python" alt="Python">
-            <img src="https://placehold.co/100x100?text=Java" alt="Java">
-            <img src="https://placehold.co/100x100?text=JS" alt="JavaScript">
-            <img src="https://placehold.co/100x100?text=PHP" alt="PHP">
-            <img src="https://placehold.co/100x100?text=Lua" alt="Lua">
-            <img src="https://placehold.co/100x100?text=HTML" alt="HTML">
-            <img src="https://placehold.co/100x100?text=CSS" alt="CSS">
+        <!-- Programming Languages -->
+        <h3 class="skill-subheading"><i class="fa-solid fa-terminal skill-subheading-icon"></i> Programming Languages</h3>
+        <div class="skill-cards-grid">
+            <div class="skill-card">
+                <i class="fa-solid fa-c skill-card-icon"></i>
+                <span class="skill-card-name">C</span>
+                <div class="skill-card-bar"><div class="skill-card-fill" data-level="75"></div></div>
+            </div>
+            <div class="skill-card">
+                <i class="fa-solid fa-c skill-card-icon" style="font-size:1.4em">++</i>
+                <span class="skill-card-name">C++</span>
+                <div class="skill-card-bar"><div class="skill-card-fill" data-level="70"></div></div>
+            </div>
+            <div class="skill-card">
+                <i class="fa-brands fa-python skill-card-icon"></i>
+                <span class="skill-card-name">Python</span>
+                <div class="skill-card-bar"><div class="skill-card-fill" data-level="90"></div></div>
+            </div>
+            <div class="skill-card">
+                <i class="fa-brands fa-java skill-card-icon"></i>
+                <span class="skill-card-name">Java</span>
+                <div class="skill-card-bar"><div class="skill-card-fill" data-level="60"></div></div>
+            </div>
+            <div class="skill-card">
+                <i class="fa-brands fa-js skill-card-icon"></i>
+                <span class="skill-card-name">JavaScript</span>
+                <div class="skill-card-bar"><div class="skill-card-fill" data-level="80"></div></div>
+            </div>
+            <div class="skill-card">
+                <i class="fa-brands fa-php skill-card-icon"></i>
+                <span class="skill-card-name">PHP</span>
+                <div class="skill-card-bar"><div class="skill-card-fill" data-level="55"></div></div>
+            </div>
+            <div class="skill-card">
+                <i class="fa-solid fa-moon skill-card-icon"></i>
+                <span class="skill-card-name">Lua</span>
+                <div class="skill-card-bar"><div class="skill-card-fill" data-level="65"></div></div>
+            </div>
+            <div class="skill-card">
+                <i class="fa-brands fa-html5 skill-card-icon"></i>
+                <span class="skill-card-name">HTML</span>
+                <div class="skill-card-bar"><div class="skill-card-fill" data-level="85"></div></div>
+            </div>
+            <div class="skill-card">
+                <i class="fa-brands fa-css3-alt skill-card-icon"></i>
+                <span class="skill-card-name">CSS</span>
+                <div class="skill-card-bar"><div class="skill-card-fill" data-level="80"></div></div>
+            </div>
         </div>
 
-        <h3>Development Areas</h3>
+        <!-- Development Areas -->
+        <h3 class="skill-subheading"><i class="fa-solid fa-sitemap skill-subheading-icon"></i> Development Areas</h3>
+        <div class="skill-areas-grid">
+            <div class="skill-area-card">
+                <i class="fa-solid fa-brain skill-area-icon"></i>
+                <span>Artificial Intelligence</span>
+            </div>
+            <div class="skill-area-card">
+                <i class="fa-solid fa-chart-line skill-area-icon"></i>
+                <span>Machine Learning</span>
+            </div>
+            <div class="skill-area-card">
+                <i class="fa-solid fa-server skill-area-icon"></i>
+                <span>Full-Stack Development</span>
+            </div>
+            <div class="skill-area-card">
+                <i class="fa-solid fa-desktop skill-area-icon"></i>
+                <span>Desktop Applications</span>
+            </div>
+            <div class="skill-area-card">
+                <i class="fa-solid fa-plug skill-area-icon"></i>
+                <span>API Development</span>
+            </div>
+            <div class="skill-area-card">
+                <i class="fa-solid fa-database skill-area-icon"></i>
+                <span>Database Design</span>
+            </div>
+            <div class="skill-area-card">
+                <i class="fa-solid fa-gears skill-area-icon"></i>
+                <span>Automation Systems</span>
+            </div>
+            <div class="skill-area-card">
+                <i class="fa-solid fa-palette skill-area-icon"></i>
+                <span>UI/UX Design</span>
+            </div>
+        </div>
 
-        <ul>
-            <li>Artificial Intelligence</li>
-            <li>Machine Learning</li>
-            <li>Full-Stack Development</li>
-            <li>Desktop Applications</li>
-            <li>API Development</li>
-            <li>Database Design</li>
-            <li>Automation Systems</li>
-            <li>UI/UX Design</li>
-        </ul>
-
-        <h3>Game Development</h3>
-
-        <div>
-            <img src="https://placehold.co/100x100?text=Godot" alt="Godot">
-            <img src="https://placehold.co/100x100?text=Roblox" alt="Roblox">
-            <img src="https://placehold.co/100x100?text=Minecraft" alt="Minecraft">
-            <img src="https://placehold.co/100x100?text=Blender" alt="Blender">
+        <!-- Game Development -->
+        <h3 class="skill-subheading"><i class="fa-solid fa-gamepad skill-subheading-icon"></i> Game Development</h3>
+        <div class="skill-cards-grid">
+            <div class="skill-card">
+                <i class="fa-solid fa-crosshairs skill-card-icon"></i>
+                <span class="skill-card-name">Godot</span>
+                <div class="skill-card-bar"><div class="skill-card-fill" data-level="60"></div></div>
+            </div>
+            <div class="skill-card">
+                <i class="fa-solid fa-cube skill-card-icon"></i>
+                <span class="skill-card-name">Roblox</span>
+                <div class="skill-card-bar"><div class="skill-card-fill" data-level="50"></div></div>
+            </div>
+            <div class="skill-card">
+                <i class="fa-solid fa-cubes skill-card-icon"></i>
+                <span class="skill-card-name">Minecraft</span>
+                <div class="skill-card-bar"><div class="skill-card-fill" data-level="70"></div></div>
+            </div>
+            <div class="skill-card">
+                <i class="fa-solid fa-shapes skill-card-icon"></i>
+                <span class="skill-card-name">Blender</span>
+                <div class="skill-card-bar"><div class="skill-card-fill" data-level="45"></div></div>
+            </div>
         </div>
 
     </section>
 
     <!-- AWARDS -->
-    <section class="awards" id="awards">
+    <section class="awards" id="awards" data-section="awards">
 
-        <h2>Achievements & Highlights</h2>
+        <h2 class="section-heading"><i class="fa-solid fa-trophy section-heading-icon"></i> Achievements & Highlights</h2>
 
-        <img src="https://placehold.co/1200x400?text=Achievements"
-             alt="Achievements">
-
-        <ul>
-            <li>Founder & Owner of Open Tech Solutions (OTS)</li>
-            <li>Founder & Owner of GM's School (GMS)</li>
-            <li>Creator of Deffin AI</li>
-            <li>Creator of Jarvis AI</li>
-            <li>Creator of GMlib</li>
-            <li>Professional Chess Player</li>
-            <li>Built Multiple Commercial Websites</li>
-            <li>Developed AI & Automation Solutions</li>
-            <li>Advanced Software Engineer</li>
-            <li>Game Developer & System Architect</li>
-        </ul>
+        <div class="awards-grid">
+            <div class="award-card">
+                <i class="fa-solid fa-building award-card-icon"></i>
+                <h4>Founder & Owner of OTS</h4>
+                <p>Open Tech Solutions — technology company</p>
+            </div>
+            <div class="award-card">
+                <i class="fa-solid fa-school award-card-icon"></i>
+                <h4>Founder & Owner of GMS</h4>
+                <p>GM's School — educational platform</p>
+            </div>
+            <div class="award-card">
+                <i class="fa-solid fa-robot award-card-icon"></i>
+                <h4>Creator of Deffin AI</h4>
+                <p>Advanced AI assistant platform</p>
+            </div>
+            <div class="award-card">
+                <i class="fa-solid fa-microchip award-card-icon"></i>
+                <h4>Creator of Jarvis AI</h4>
+                <p>Offline-capable AI system</p>
+            </div>
+            <div class="award-card">
+                <i class="fa-solid fa-cubes award-card-icon"></i>
+                <h4>Creator of GMlib</h4>
+                <p>Python utility library</p>
+            </div>
+            <div class="award-card">
+                <i class="fa-solid fa-chess award-card-icon"></i>
+                <h4>Professional Chess Player</h4>
+                <p>Strategic thinking & problem solving</p>
+            </div>
+            <div class="award-card">
+                <i class="fa-solid fa-globe award-card-icon"></i>
+                <h4>Built Commercial Websites</h4>
+                <p>Multiple professional web projects</p>
+            </div>
+            <div class="award-card">
+                <i class="fa-solid fa-wand-magic-sparkles award-card-icon"></i>
+                <h4>AI & Automation Solutions</h4>
+                <p>Intelligent business systems</p>
+            </div>
+            <div class="award-card">
+                <i class="fa-solid fa-code award-card-icon"></i>
+                <h4>Advanced Software Engineer</h4>
+                <p>Full-stack development expertise</p>
+            </div>
+            <div class="award-card">
+                <i class="fa-solid fa-gamepad award-card-icon"></i>
+                <h4>Game Developer & Architect</h4>
+                <p>System design & game creation</p>
+            </div>
+        </div>
 
     </section>
 
     <!-- CONTACT -->
-    <section class="contact" id="contact">
+    <section class="contact" id="contact" data-section="contact">
 
-        <h2>Get In Touch</h2>
+        <h2 class="section-heading"><i class="fa-solid fa-paper-plane section-heading-icon"></i> Get In Touch</h2>
 
-        <img src="https://placehold.co/1200x400?text=Contact+Me"
-             alt="Contact">
-
-        <p>
+        <p class="contact-intro">
             Interested in collaborating, building a project,
             hiring a developer, or discussing technology?
         </p>
 
-        <h3>Contact Information</h3>
+        <div class="contact-info-grid">
+            <div class="contact-info-card">
+                <i class="fa-solid fa-user contact-info-icon"></i>
+                <div>
+                    <h4>Name</h4>
+                    <p>Muntahi</p>
+                </div>
+            </div>
+            <div class="contact-info-card">
+                <i class="fa-solid fa-location-dot contact-info-icon"></i>
+                <div>
+                    <h4>Location</h4>
+                    <p>Dhaka, Bangladesh</p>
+                </div>
+            </div>
+            <div class="contact-info-card">
+                <i class="fa-solid fa-circle-check contact-info-icon"></i>
+                <div>
+                    <h4>Status</h4>
+                    <p>Available for Projects</p>
+                </div>
+            </div>
+        </div>
 
-        <p><strong>Name:</strong> Muntahi</p>
-        <p><strong>Location:</strong> Dhaka, Bangladesh</p>
-        <p><strong>Status:</strong> Available for Projects</p>
-
-        <div>
-            <a href="#">GitHub</a><br>
-            <a href="#">Discord</a><br>
-            <a href="#">YouTube</a><br>
-            <a href="#">Steam</a><br>
-            <a href="#">Email</a>
+        <div class="contact-links-grid">
+            <a href="#" class="contact-link-card">
+                <i class="fa-brands fa-github contact-link-icon"></i>
+                <span>GitHub</span>
+            </a>
+            <a href="#" class="contact-link-card">
+                <i class="fa-brands fa-discord contact-link-icon"></i>
+                <span>Discord</span>
+            </a>
+            <a href="#" class="contact-link-card">
+                <i class="fa-brands fa-youtube contact-link-icon"></i>
+                <span>YouTube</span>
+            </a>
+            <a href="#" class="contact-link-card">
+                <i class="fa-brands fa-steam contact-link-icon"></i>
+                <span>Steam</span>
+            </a>
+            <a href="#" class="contact-link-card">
+                <i class="fa-solid fa-envelope contact-link-icon"></i>
+                <span>Email</span>
+            </a>
         </div>
 
     </section>

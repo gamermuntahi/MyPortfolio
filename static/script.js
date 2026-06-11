@@ -275,6 +275,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             animateMeters();
+
+            // ===== Initialize portfolio features after intro exits =====
+            initPortfolioFeatures(bgAudio);
         }, 1300);
     }
 
@@ -311,3 +314,228 @@ document.addEventListener('DOMContentLoaded', function () {
     // Responsive sizing is handled entirely by CSS @media queries
     // No JS resize handler needed - CSS handles all breakpoints
 });
+
+// ===== PORTFOLIO FEATURES - Initialized after cinematic intro =====
+// Active nav, navbar scroll state, music volume, particles, skill bars, section reveals
+
+function initPortfolioFeatures(bgAudio) {
+    const navbar = document.getElementById('navbar');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const sections = document.querySelectorAll('[data-section]');
+    const heroSection = document.getElementById('heroArea');
+    const particlesCanvas = document.getElementById('particlesCanvas');
+    let originalVolume = bgAudio.volume;
+    let isPastHero = false;
+
+    // ===== PARTICLES ANIMATION =====
+    if (particlesCanvas) {
+        const ctx = particlesCanvas.getContext('2d');
+        let particles = [];
+        const particleCount = 60;
+        const connectionDistance = 120;
+        const particleSpeed = 0.4;
+
+        function resizeCanvas() {
+            particlesCanvas.width = window.innerWidth;
+            particlesCanvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Create particles
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * particlesCanvas.width,
+                y: Math.random() * particlesCanvas.height,
+                vx: (Math.random() - 0.5) * particleSpeed,
+                vy: (Math.random() - 0.5) * particleSpeed,
+                radius: Math.random() * 2 + 1,
+                opacity: Math.random() * 0.5 + 0.2
+            });
+        }
+
+        function animateParticles() {
+            requestAnimationFrame(animateParticles);
+            ctx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
+
+            // Update and draw particles
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+
+                // Move particle
+                p.x += p.vx;
+                p.y += p.vy;
+
+                // Wrap around edges
+                if (p.x < 0) p.x = particlesCanvas.width;
+                if (p.x > particlesCanvas.width) p.x = 0;
+                if (p.y < 0) p.y = particlesCanvas.height;
+                if (p.y > particlesCanvas.height) p.y = 0;
+
+                // Draw particle
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(168, 85, 247, ${p.opacity})`;
+                ctx.fill();
+
+                // Draw connections to nearby particles
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < connectionDistance) {
+                        const lineOpacity = (1 - dist / connectionDistance) * 0.15;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(168, 85, 247, ${lineOpacity})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        animateParticles();
+    }
+
+    // ===== SCROLL REVEAL - IntersectionObserver =====
+    const scrollSections = document.querySelectorAll('.inner_part section:not(.about_sestion)');
+
+    // Add scroll-reveal class to all sections except about (about has its own on-load animations)
+    scrollSections.forEach(section => {
+        section.classList.add('scroll-reveal');
+    });
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+
+                // Staggered child reveals
+                const children = entry.target.querySelectorAll(
+                    '.project-card, .skill-card, .skill-area-card, .award-card, .contact-info-card, .contact-link-card'
+                );
+                children.forEach((child, index) => {
+                    setTimeout(() => {
+                        child.style.opacity = '1';
+                        child.style.transform = 'translateY(0)';
+                    }, index * 80);
+                });
+
+                // Skill bar fill animation
+                const skillFills = entry.target.querySelectorAll('.skill-card-fill');
+                skillFills.forEach((fill, index) => {
+                    const level = fill.getAttribute('data-level');
+                    setTimeout(() => {
+                        fill.style.width = level + '%';
+                        fill.classList.add('filled');
+                    }, 300 + index * 100);
+                });
+
+                sectionObserver.unobserve(entry.target); // Only animate once
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    scrollSections.forEach(section => {
+        sectionObserver.observe(section);
+    });
+
+    // ===== ACTIVE NAV HIGHLIGHTING =====
+    function updateActiveNav() {
+        let currentSection = '';
+        const scrollPos = window.scrollY + 100;
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+
+            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                currentSection = section.getAttribute('data-section');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            const linkSection = link.getAttribute('data-section');
+            if (linkSection === currentSection) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    // ===== NAVBAR SCROLL STATE & MUSIC VOLUME =====
+    function updateNavbarState() {
+        if (!heroSection) return;
+
+        const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+        const scrollY = window.scrollY;
+
+        if (scrollY > heroBottom - 100) {
+            // Past hero section
+            if (!isPastHero) {
+                isPastHero = true;
+                navbar.classList.add('scrolled');
+
+                // Reduce music volume to 20%
+                if (bgAudio && originalVolume > 0.2) {
+                    bgAudio.volume = 0.2;
+                    // Update volume slider if it exists
+                    const volSlider = document.getElementById('vol');
+                    if (volSlider) {
+                        volSlider.value = 0.2;
+                    }
+                }
+            }
+        } else {
+            // In hero section
+            if (isPastHero) {
+                isPastHero = false;
+                navbar.classList.remove('scrolled');
+
+                // Restore original music volume
+                if (bgAudio) {
+                    bgAudio.volume = originalVolume;
+                    const volSlider = document.getElementById('vol');
+                    if (volSlider) {
+                        volSlider.value = originalVolume;
+                    }
+                }
+            }
+        }
+    }
+
+    // ===== SCROLL EVENT HANDLER =====
+    // Throttled for performance
+    let scrollTimeout;
+    window.addEventListener('scroll', function () {
+        if (scrollTimeout) return;
+        scrollTimeout = setTimeout(() => {
+            updateActiveNav();
+            updateNavbarState();
+            scrollTimeout = null;
+        }, 50);
+    }, { passive: true });
+
+    // Initial call
+    updateActiveNav();
+    updateNavbarState();
+
+    // ===== NAV LINKS - Smooth scroll to sections =====
+    navLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetEl = document.querySelector(targetId);
+            if (targetEl) {
+                targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+}
