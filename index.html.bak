@@ -7,10 +7,6 @@
     <link rel="shortcut icon" href="static/image/Favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <title>Muntahi</title>
 </head>
 
@@ -97,8 +93,6 @@
         </div>
 
         <!-- HERO -->
-        <canvas id="threeCanvas"></canvas>
-        <div class="mouse-glow" id="mouseGlow"></div>
         <section class="heroArea" id="heroArea" data-section="heroArea">
             <!-- SOUND METERS (EQUALIZER) -->
             <div class="sound-meter left" id="meterLeft"></div>
@@ -568,7 +562,6 @@
     </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script src="static/script.js"></script>
 </body>
 

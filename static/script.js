@@ -231,9 +231,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const homeContent = document.getElementById('homeContent');
             homeContent.classList.add('show');
 
-            // Enable scrolling for home content
-            document.body.style.overflow = 'auto';
-
+            // Lenis handles scrolling — keep overflow hidden on html and body
             // Start audio and video
             audioCtx.resume();
             bgAudio.play();
@@ -324,10 +322,332 @@ function initPortfolioFeatures(bgAudio) {
     const sections = document.querySelectorAll('[data-section]');
     const heroSection = document.getElementById('heroArea');
     const particlesCanvas = document.getElementById('particlesCanvas');
+    const threeCanvas = document.getElementById('threeCanvas');
+    const mouseGlow = document.getElementById('mouseGlow');
     let originalVolume = bgAudio.volume;
     let isPastHero = false;
+    let lenis = null;
+    let threeScene = null, threeCamera = null, threeRenderer = null;
+    let threeShapes = [];
+    let mouseX = 0, mouseY = 0;
+    let targetMouseX = 0, targetMouseY = 0;
 
-    // ===== PARTICLES ANIMATION =====
+    
+
+    // ===== THREE.JS 3D BACKGROUND SCENE =====
+    if (threeCanvas && typeof THREE !== 'undefined') {
+        threeScene = new THREE.Scene();
+
+        threeCamera = new THREE.PerspectiveCamera(
+            60,
+            window.innerWidth / window.innerHeight,
+            0.1,
+            1000
+        );
+        threeCamera.position.set(0, 0, 30);
+
+        threeRenderer = new THREE.WebGLRenderer({
+            canvas: threeCanvas,
+            alpha: true,
+            antialias: true
+        });
+        threeRenderer.setSize(window.innerWidth, window.innerHeight);
+        threeRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // Ambient + point lighting for depth
+        threeScene.add(new THREE.AmbientLight(0x1a0a3e, 0.6));
+
+        const pl1 = new THREE.PointLight(0xa855f7, 1.2, 50);
+        pl1.position.set(10, 5, 10);
+        threeScene.add(pl1);
+
+        const pl2 = new THREE.PointLight(0x8b5cf6, 0.8, 40);
+        pl2.position.set(-8, -3, 8);
+        threeScene.add(pl2);
+
+        const pl3 = new THREE.PointLight(0x6366f1, 0.6, 45);
+        pl3.position.set(0, 8, -5);
+        threeScene.add(pl3);
+
+        // Material definitions
+        const glassMat = new THREE.MeshPhysicalMaterial({
+            color: 0xa855f7,
+            metalness: 0.1,
+            roughness: 0.4,
+            transparent: true,
+            opacity: 0.35,
+            emissive: 0x2a0a4e,
+            emissiveIntensity: 0.3,
+            clearcoat: 0.1
+        });
+
+        const glassMat2 = new THREE.MeshPhysicalMaterial({
+            color: 0x8b5cf6,
+            metalness: 0.1,
+            roughness: 0.35,
+            transparent: true,
+            opacity: 0.3,
+            emissive: 0x1a0a3e,
+            emissiveIntensity: 0.25,
+            clearcoat: 0.1
+        });
+
+        const wireframeMat = new THREE.MeshBasicMaterial({
+            color: 0xa855f7,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.08
+        });
+
+        // Helper: create and register a shape
+        function createShape(geometry, material, pos, rotSpd, floatSpd, floatAmp) {
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.set(pos.x, pos.y, pos.z);
+            mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+            mesh.userData = {
+                rotationSpeed: rotSpd,
+                floatSpeed: floatSpd,
+                floatAmp: floatAmp,
+                baseY: pos.y,
+                phase: Math.random() * Math.PI * 2
+            };
+            threeScene.add(mesh);
+            threeShapes.push(mesh);
+            return mesh;
+        }
+
+        // Floating geometric shapes
+        createShape(
+            new THREE.IcosahedronGeometry(2.5, 0), glassMat,
+            { x: 9, y: 2, z: -5 }, { x: 0.002, y: 0.003, z: 0.001 }, 0.3, 1.5
+        );
+        createShape(
+            new THREE.TorusKnotGeometry(1.8, 0.3, 100, 16), glassMat2,
+            { x: -10, y: -1, z: -3 }, { x: 0.003, y: 0.002, z: 0.004 }, 0.25, 1.2
+        );
+        createShape(
+            new THREE.OctahedronGeometry(1.6, 0), glassMat,
+            { x: 7, y: 7, z: -8 }, { x: 0.001, y: 0.004, z: 0.002 }, 0.4, 2.0
+        );
+        createShape(
+            new THREE.IcosahedronGeometry(1.2, 0), wireframeMat,
+            { x: -8, y: 6, z: -6 }, { x: 0.002, y: 0.001, z: 0.003 }, 0.35, 1.8
+        );
+        createShape(
+            new THREE.TorusGeometry(2.0, 0.2, 16, 50), glassMat2,
+            { x: 2, y: -6, z: -4 }, { x: 0.001, y: 0.003, z: 0.002 }, 0.3, 1.0
+        );
+        createShape(
+            new THREE.DodecahedronGeometry(1.0, 0), glassMat,
+            { x: 12, y: -5, z: -7 }, { x: 0.004, y: 0.002, z: 0.003 }, 0.5, 1.3
+        );
+        createShape(
+            new THREE.TorusKnotGeometry(1.5, 0.3, 64, 12), wireframeMat,
+            { x: -3, y: -2, z: -12 }, { x: 0.001, y: 0.002, z: 0.001 }, 0.2, 0.8
+        );
+
+        // Floating particles (starfield dots)
+        const particlesGeom = new THREE.BufferGeometry();
+        const particlesCount = 200;
+        const posArray = new Float32Array(particlesCount * 3);
+        for (let i = 0; i < particlesCount * 3; i += 3) {
+            posArray[i]     = (Math.random() - 0.5) * 40;
+            posArray[i + 1] = (Math.random() - 0.5) * 30;
+            posArray[i + 2] = (Math.random() - 0.5) * 20 - 5;
+        }
+        particlesGeom.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMat = new THREE.PointsMaterial({
+            size: 0.05,
+            color: 0xa855f7,
+            transparent: true,
+            opacity: 0.6,
+            blending: THREE.AdditiveBlending
+        });
+        const particlesMesh = new THREE.Points(particlesGeom, particlesMat);
+        particlesMesh.userData = {
+            isParticles: true,
+            rotationSpeed: { x: 0.0005, y: 0.0003, z: 0.0002 }
+        };
+        threeScene.add(particlesMesh);
+        threeShapes.push(particlesMesh);
+
+        // Mouse tracking for 3D scene reactiveness
+        document.addEventListener('mousemove', function (e) {
+            targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            targetMouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        }, { passive: true });
+
+        // Handle resize
+        window.addEventListener('resize', function () {
+            threeCamera.aspect = window.innerWidth / window.innerHeight;
+            threeCamera.updateProjectionMatrix();
+            threeRenderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    }
+
+    // ===== MOUSE GLOW TRACKING =====
+    if (mouseGlow) {
+        document.addEventListener('mousemove', function (e) {
+            mouseGlow.style.left = e.clientX + 'px';
+            mouseGlow.style.top = e.clientY + 'px';
+            if (!mouseGlow.classList.contains('visible')) {
+                mouseGlow.classList.add('visible');
+            }
+        }, { passive: true });
+
+        document.addEventListener('mouseleave', function () {
+            mouseGlow.classList.remove('visible');
+        });
+    }
+
+    // ===== ACTIVE NAV & NAVBAR STATE (shared helpers) =====
+    function updateActiveNavLenis(scrollPos) {
+        let currentSection = '';
+        const adjustedScroll = scrollPos + 100;
+
+        sections.forEach(function (section) {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+
+            if (adjustedScroll >= sectionTop && adjustedScroll < sectionTop + sectionHeight) {
+                currentSection = section.getAttribute('data-section');
+            }
+        });
+
+        navLinks.forEach(function (link) {
+            link.classList.remove('active');
+            const linkSection = link.getAttribute('data-section');
+            if (linkSection === currentSection) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    function updateNavbarStateLenis(scrollPos) {
+        if (!heroSection) return;
+
+        const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+
+        if (scrollPos > heroBottom - 100) {
+            if (!isPastHero) {
+                isPastHero = true;
+                navbar.classList.add('scrolled');
+                if (bgAudio && originalVolume > 0.2) {
+                    bgAudio.volume = 0.2;
+                    const volSlider = document.getElementById('vol');
+                    if (volSlider) volSlider.value = 0.2;
+                }
+            }
+        } else {
+            if (isPastHero) {
+                isPastHero = false;
+                navbar.classList.remove('scrolled');
+                if (bgAudio) {
+                    bgAudio.volume = originalVolume;
+                    const volSlider = document.getElementById('vol');
+                    if (volSlider) volSlider.value = originalVolume;
+                }
+            }
+        }
+    }
+
+    // ===== PARALLAX ON SCROLL =====
+    const parallaxSections = document.querySelectorAll('.inner_part section');
+
+    function updateParallax() {
+        const scrollY = lenis ? (lenis.scroll || 0) : window.scrollY;
+
+        parallaxSections.forEach(function (section) {
+            const rect = section.getBoundingClientRect();
+            const centerY = rect.top + rect.height / 2;
+            const viewportCenter = window.innerHeight / 2;
+            const offset = (centerY - viewportCenter) * 0.03;
+
+            section.style.transform = 'translateY(' + offset + 'px)';
+            section.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+        });
+    }
+
+    // ===== LENIS SMOOTH SCROLL =====
+    if (typeof Lenis !== 'undefined') {
+        lenis = new Lenis({
+            duration: 1.2,
+            easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+            smoothWheel: true,
+            gestureOrientation: 'vertical',
+            touchMultiplier: 2
+        });
+
+        lenis.on('scroll', function (e) {
+            updateActiveNavLenis(e.scroll);
+            updateNavbarStateLenis(e.scroll);
+            updateParallax();
+        });
+    } else {
+        // Fallback: native scroll with throttled handler
+        let scrollTimeout;
+        window.addEventListener('scroll', function () {
+            if (scrollTimeout) return;
+            scrollTimeout = setTimeout(function () {
+                updateActiveNavLenis(window.scrollY);
+                updateNavbarStateLenis(window.scrollY);
+                updateParallax();
+                scrollTimeout = null;
+            }, 50);
+        }, { passive: true });
+    }
+
+    // Initial calls
+    updateActiveNavLenis(0);
+    updateNavbarStateLenis(0);
+
+    // ===== MAIN RAF LOOP (Three.js + Lenis) =====
+    function mainRaf(time) {
+        if (lenis) {
+            lenis.raf(time);
+        }
+
+        // Three.js animation
+        if (threeScene && threeRenderer) {
+            mouseX += (targetMouseX - mouseX) * 0.05;
+            mouseY += (targetMouseY - mouseY) * 0.05;
+
+            const scrollY = lenis ? (lenis.scroll || 0) : window.scrollY;
+            const maxScroll = lenis ? (lenis.limit || document.body.scrollHeight - window.innerHeight) : (document.body.scrollHeight - window.innerHeight);
+            const scrollProgress = maxScroll > 0 ? scrollY / maxScroll : 0;
+
+            // Animate each shape
+            for (let i = 0; i < threeShapes.length; i++) {
+                const shape = threeShapes[i];
+                const ud = shape.userData;
+
+                if (ud.isParticles) {
+                    shape.rotation.y += ud.rotationSpeed.y;
+                    shape.rotation.x += ud.rotationSpeed.x;
+                } else {
+                    const floatOffset = Math.sin(time * 0.001 * ud.floatSpeed + ud.phase) * ud.floatAmp;
+                    shape.position.y = ud.baseY + floatOffset - scrollProgress * 8;
+
+                    shape.rotation.x += ud.rotationSpeed.x;
+                    shape.rotation.y += ud.rotationSpeed.y;
+                    shape.rotation.z += ud.rotationSpeed.z;
+                }
+            }
+
+            // Mouse-reactive camera
+            threeCamera.position.x += (mouseX * 3 - threeCamera.position.x) * 0.02;
+            threeCamera.position.y += (mouseY * 2 - threeCamera.position.y + scrollProgress * 2) * 0.02;
+            threeCamera.lookAt(0, scrollProgress * 5, 0);
+
+            threeRenderer.render(threeScene, threeCamera);
+        }
+
+        requestAnimationFrame(mainRaf);
+    }
+
+    requestAnimationFrame(mainRaf);
+
+    // ===== PARTICLES CANVAS (preserved) =====
     if (particlesCanvas) {
         const ctx = particlesCanvas.getContext('2d');
         let particles = [];
@@ -375,7 +695,7 @@ function initPortfolioFeatures(bgAudio) {
                 // Draw particle
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(168, 85, 247, ${p.opacity})`;
+                ctx.fillStyle = 'rgba(168, 85, 247, ' + p.opacity + ')';
                 ctx.fill();
 
                 // Draw connections to nearby particles
@@ -390,7 +710,7 @@ function initPortfolioFeatures(bgAudio) {
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = `rgba(168, 85, 247, ${lineOpacity})`;
+                        ctx.strokeStyle = 'rgba(168, 85, 247, ' + lineOpacity + ')';
                         ctx.lineWidth = 0.5;
                         ctx.stroke();
                     }
@@ -405,12 +725,12 @@ function initPortfolioFeatures(bgAudio) {
     const scrollSections = document.querySelectorAll('.inner_part section:not(.about_sestion)');
 
     // Add scroll-reveal class to all sections except about (about has its own on-load animations)
-    scrollSections.forEach(section => {
+    scrollSections.forEach(function (section) {
         section.classList.add('scroll-reveal');
     });
 
-    const sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+    const sectionObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
             if (entry.isIntersecting) {
                 entry.target.classList.add('revealed');
 
@@ -418,8 +738,8 @@ function initPortfolioFeatures(bgAudio) {
                 const children = entry.target.querySelectorAll(
                     '.project-card, .skill-card, .skill-area-card, .award-card, .contact-info-card, .contact-link-card'
                 );
-                children.forEach((child, index) => {
-                    setTimeout(() => {
+                children.forEach(function (child, index) {
+                    setTimeout(function () {
                         child.style.opacity = '1';
                         child.style.transform = 'translateY(0)';
                     }, index * 80);
@@ -427,9 +747,9 @@ function initPortfolioFeatures(bgAudio) {
 
                 // Skill bar fill animation
                 const skillFills = entry.target.querySelectorAll('.skill-card-fill');
-                skillFills.forEach((fill, index) => {
+                skillFills.forEach(function (fill, index) {
                     const level = fill.getAttribute('data-level');
-                    setTimeout(() => {
+                    setTimeout(function () {
                         fill.style.width = level + '%';
                         fill.classList.add('filled');
                     }, 300 + index * 100);
@@ -443,99 +763,74 @@ function initPortfolioFeatures(bgAudio) {
         rootMargin: '0px 0px -50px 0px'
     });
 
-    scrollSections.forEach(section => {
+    scrollSections.forEach(function (section) {
         sectionObserver.observe(section);
     });
 
-    // ===== ACTIVE NAV HIGHLIGHTING =====
-    function updateActiveNav() {
-        let currentSection = '';
-        const scrollPos = window.scrollY + 100;
-
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-
-            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                currentSection = section.getAttribute('data-section');
-            }
-        });
-
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            const linkSection = link.getAttribute('data-section');
-            if (linkSection === currentSection) {
-                link.classList.add('active');
-            }
-        });
-    }
-
-    // ===== NAVBAR SCROLL STATE & MUSIC VOLUME =====
-    function updateNavbarState() {
-        if (!heroSection) return;
-
-        const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
-        const scrollY = window.scrollY;
-
-        if (scrollY > heroBottom - 100) {
-            // Past hero section
-            if (!isPastHero) {
-                isPastHero = true;
-                navbar.classList.add('scrolled');
-
-                // Reduce music volume to 20%
-                if (bgAudio && originalVolume > 0.2) {
-                    bgAudio.volume = 0.2;
-                    // Update volume slider if it exists
-                    const volSlider = document.getElementById('vol');
-                    if (volSlider) {
-                        volSlider.value = 0.2;
-                    }
-                }
-            }
-        } else {
-            // In hero section
-            if (isPastHero) {
-                isPastHero = false;
-                navbar.classList.remove('scrolled');
-
-                // Restore original music volume
-                if (bgAudio) {
-                    bgAudio.volume = originalVolume;
-                    const volSlider = document.getElementById('vol');
-                    if (volSlider) {
-                        volSlider.value = originalVolume;
-                    }
-                }
-            }
-        }
-    }
-
-    // ===== SCROLL EVENT HANDLER =====
-    // Throttled for performance
-    let scrollTimeout;
-    window.addEventListener('scroll', function () {
-        if (scrollTimeout) return;
-        scrollTimeout = setTimeout(() => {
-            updateActiveNav();
-            updateNavbarState();
-            scrollTimeout = null;
-        }, 50);
-    }, { passive: true });
-
-    // Initial call
-    updateActiveNav();
-    updateNavbarState();
-
-    // ===== NAV LINKS - Smooth scroll to sections =====
-    navLinks.forEach(link => {
+    // ===== NAV LINKS - Lenis smooth scroll =====
+    navLinks.forEach(function (link) {
         link.addEventListener('click', function (e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
             const targetEl = document.querySelector(targetId);
             if (targetEl) {
-                targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                if (lenis) {
+                    lenis.scrollTo(targetEl, {
+                        offset: 0,
+                        duration: 1.5,
+                        easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); }
+                    });
+                } else {
+                    targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             }
+        });
+    });
+
+    // ===== CARD TILT EFFECT =====
+    const tiltCards = document.querySelectorAll(
+        '.project-card, .skill-card, .skill-area-card, .award-card, .contact-info-card, .contact-link-card'
+    );
+
+    tiltCards.forEach(function (card) {
+        card.addEventListener('mousemove', function (e) {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = ((y - centerY) / centerY) * -8;
+            const rotateY = ((x - centerX) / centerX) * 8;
+
+            card.style.transform = 'perspective(1200px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale3d(1.02, 1.02, 1.02)';
+            card.style.transition = 'transform 0.1s ease-out';
+
+            // CSS custom properties for radial gradient mouse follow
+            card.style.setProperty('--mouse-x', (x / rect.width) * 100 + '%');
+            card.style.setProperty('--mouse-y', (y / rect.height) * 100 + '%');
+        });
+
+        card.addEventListener('mouseleave', function () {
+            card.style.transform = 'perspective(1200px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+            card.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+        });
+    });
+
+    // ===== MAGNETIC BUTTONS (Nav Links) =====
+    navLinks.forEach(function (link) {
+        link.addEventListener('mousemove', function (e) {
+            const rect = link.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            const strength = 0.3;
+
+            link.style.transform = 'translate(' + (x * strength) + 'px, ' + (y * strength) + 'px)';
+            link.style.transition = 'transform 0.15s ease-out';
+        });
+
+        link.addEventListener('mouseleave', function () {
+            link.style.transform = 'translate(0, 0)';
+            link.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
         });
     });
 }
