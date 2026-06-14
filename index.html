@@ -121,12 +121,12 @@
         height: 160px;
         margin-bottom: 2rem;
       }
-      .enter-logo-ring svg {
+      .enter-logo-ring img {
         position: absolute;
         inset: 0;
         animation: spin 8s linear infinite;
       }
-      .enter-logo-ring svg:nth-child(2) {
+      .enter-logo-ring img:nth-child(2) {
         animation: spin 5s linear infinite reverse;
         opacity: 0.5;
       }
@@ -557,7 +557,7 @@
         height: 200px;
         margin: 0 auto 2rem;
       }
-      .hero-avatar-ring svg {
+      .hero-avatar-ring img {
         position: absolute;
         inset: 0;
         animation: spin 12s linear infinite;
@@ -1894,73 +1894,27 @@
         style="position: absolute; inset: 0; pointer-events: none"
       ></canvas>
       <div class="enter-logo-ring">
-        <svg
-          viewBox="0 0 160 160"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx="80"
-            cy="80"
-            r="75"
-            stroke="url(#g1)"
-            stroke-width="1.5"
-            stroke-dasharray="8 4"
-          />
-          <defs>
-            <linearGradient
-              id="g1"
-              x1="0"
-              y1="0"
-              x2="160"
-              y2="160"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stop-color="#7c3aed" />
-              <stop offset="1" stop-color="#22d3ee" />
-            </linearGradient>
-          </defs>
-        </svg>
-        <svg
-          viewBox="0 0 160 160"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx="80"
-            cy="80"
-            r="60"
-            stroke="url(#g2)"
-            stroke-width="1"
-            stroke-dasharray="4 8"
-          />
-          <defs>
-            <linearGradient
-              id="g2"
-              x1="160"
-              y1="0"
-              x2="0"
-              y2="160"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stop-color="#ec4899" />
-              <stop offset="1" stop-color="#7c3aed" />
-            </linearGradient>
-          </defs>
-        </svg>
+        <img
+          src="static/image/discord.png"
+          style="
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+          "
+        />
         <div class="enter-avatar">
-          <span
+          <img
+            src="static/image/discord.png"
             style="
-              font-family: var(--font-display);
-              font-size: 2.5rem;
-              font-weight: 800;
-              background: var(--grad);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-              background-clip: text;
+              position: absolute;
+              inset: 0;
+              width: 100%;
+              height: 100%;
+              animation: no;
             "
-            >M</span
-          >
+          />
         </div>
       </div>
       <div class="enter-title">dev.muntahi</div>
@@ -2055,53 +2009,31 @@
         <!-- Right floating cards -->
         <div class="hero-right" id="hero-right">
           <div class="hero-avatar-ring floating" style="animation-duration: 7s">
-            <svg
-              viewBox="0 0 200 200"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+            <img
+              src="static/image/Iron_sword_mc.png"
               style="
                 position: absolute;
                 inset: 0;
                 width: 100%;
                 height: 100%;
-                animation: spin 10s linear infinite;
+                animation: spin 10s alternate-reverse infinite;
               "
-            >
-              <circle
-                cx="100"
-                cy="100"
-                r="95"
-                stroke="url(#hg1)"
-                stroke-width="1.5"
-                stroke-dasharray="12 6"
-              />
-              <defs>
-                <linearGradient
-                  id="hg1"
-                  x1="0"
-                  y1="0"
-                  x2="200"
-                  y2="200"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stop-color="#7c3aed" />
-                  <stop offset="1" stop-color="#22d3ee" />
-                </linearGradient>
-              </defs>
-            </svg>
+            />
+            <img
+              src="static/image/Iron_sword_mc.png"
+              style="
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                animation: spin 10s alternate infinite;
+              "
+            />
             <div class="hero-avatar-inner">
-              <span
-                style="
-                  font-family: var(--font-display);
-                  font-size: 4rem;
-                  font-weight: 800;
-                  background: var(--grad);
-                  -webkit-background-clip: text;
-                  -webkit-text-fill-color: transparent;
-                  background-clip: text;
-                "
-                >M</span
-              >
+            <img
+              src="static/image/mc.png"
+              style="position: absolute; inset: 0; width: 100%; height: 100%; animation: none;"
+            />
             </div>
           </div>
 
@@ -2337,7 +2269,10 @@
                     background-clip: text;
                   "
                 >
-                  M
+            <img
+              src="static/image/me.png"
+              style="width: 130%; height: 100%; animation: none;z-index: 10;overflow:visible;"
+            />
                 </div>
                 <div
                   style="
